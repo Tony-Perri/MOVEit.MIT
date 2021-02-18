@@ -1,5 +1,5 @@
-function Get-MITFile
-{<#
+function Get-MITFile {
+    <#
     .SYNOPSIS
         Get MOVEit Transfer File(s)
     #>
