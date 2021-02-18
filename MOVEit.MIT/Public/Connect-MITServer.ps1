@@ -48,7 +48,7 @@ function Connect-MITServer {
             grant_type = 'password'
             username = $Credential.UserName
             password= $Credential.GetNetworkCredential().Password
-            } | Invoke-RestMethod -Uri $uri @params
+            } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
 
         if ($response.access_token) {
             $script:Token = @{                    
