@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>MITUserSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITUserSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+        <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>17</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Username</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Full Name</Label>
+            <Width>24</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Permission</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Status</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Email</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>username</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>fullname</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>permission</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>status</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>email</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITFolderSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITFolderSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Last Changed</Label>
+            <Width>20</Width>
+            <Alignment>Right</Alignment>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>#Files</Label>
+            <Width>14</Width>
+            <Alignment>Right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Path</Label>
+            <Width>40</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.lastContentChangeTime))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>totalFileCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>path</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITFileSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITFileSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Upload Stamp</Label>
+            <Width>20</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>Size</Label>
+            <Width>14</Width>
+            <Alignment>Right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Path</Label>
+            <Width>40</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.uploadStamp))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>size</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>path</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITFolderContent</Name>
+      <ViewSelectedBy>
+        <TypeName>MITFolderContent</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>LastUpdateTime</Label>
+            <Width>20</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Type</Label>
+            <Width>8</Width>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>Size</Label>
+            <Width>14</Width>
+            <Alignment>Right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>35</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Path</Label>
+            <Width>40</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.lastUpdateTime))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>type</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  switch($_.size)
+                  {
+                    { $_ -gt 1tb }
+                            { "{0:n0} TB" -f ($_ / 1tb);break }
+                    { $_ -gt 1gb }
+                            { "{0:n0} GB" -f ($_ / 1gb);break }
+                    { $_ -gt 1mb }
+                            { "{0:n0} MB" -f ($_ / 1mb);break }
+                    { $_ -gt 1kb }
+                            { "{0:n0} KB" -f ($_ / 1Kb);break }
+                    { $_ -gt 1 }
+                            { "{0} B" -f $_}
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>path</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITFolderAcl</Name>
+      <ViewSelectedBy>
+        <TypeName>MITFolderAcl</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Read</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Write</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>Delete</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>List</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Notify</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Subs</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Share</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>List Users</Label>
+            <Width>11</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Admin</Label>
+            <Width>7</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.readFiles) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.writeFiles) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.deleteFiles) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.listFiles) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.notify) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.addDeleteSubfolders) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.share) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.listUsers) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.permissions.admin) { "X" }</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITTransferStatus</Name>
+      <ViewSelectedBy>
+        <TypeName>MITTransferStatus</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>StartTime</Label>
+            <Width>20</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Username</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IP Address</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>Folder</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>FileName</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Direction</Label>
+            <Width>9</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Size</Label>
+            <Width>10</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Rate</Label>
+            <Width>10</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Status</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>End Time</Label>
+            <Width>20</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.timeStarted))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>userLoginname</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>userIp</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>folderName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>fileName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>direction</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                switch($_.currentBytes)
+                  {
+                    { $_ -gt 1tb }
+                            { "{0:n0} TB" -f ($_ / 1tb);break }
+                    { $_ -gt 1gb }
+                            { "{0:n0} GB" -f ($_ / 1gb);break }
+                    { $_ -gt 1mb }
+                            { "{0:n0} MB" -f ($_ / 1mb);break }
+                    { $_ -gt 1kb }
+                            { "{0:n0} KB" -f ($_ / 1Kb);break }
+                    { $_ -gt 1 }
+                            { "{0} B" -f $_}
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>switch($_.transferRate)
+                  {
+                    { $_ -gt 1tb }
+                            { "{0:n2} TB/s" -f ($_ / 1tb);break }
+                    { $_ -gt 1gb }
+                            { "{0:n2} GB/s" -f ($_ / 1gb);break }
+                    { $_ -gt 1mb }
+                            { "{0:n2} MB/s" -f ($_ / 1mb);break }
+                    { $_ -gt 1kb }
+                            { "{0:n2} KB/s" -f ($_ / 1Kb);break }
+                    { $_ -gt 1 }
+                            { "{0} B/s" -f $_}
+                  }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>transferStatus</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.timeEnded))</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

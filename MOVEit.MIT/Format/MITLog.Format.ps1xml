@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>MITLog</Name>
+      <ViewSelectedBy>
+        <TypeName>MITLog</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>      
+         <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>10</Width>
+          </TableColumnHeader>    
+          <TableColumnHeader>
+            <Label>Log Time</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+            <Width>6</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Action</Label>
+            <Width>18</Width>
+          </TableColumnHeader>          
+          <TableColumnHeader>
+            <Label>User Full Name</Label>
+            <Width>16</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>File Name</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>File ID</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Folder Name</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IPAddress</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Message</Label>            
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>  
+            <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>                   
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.logtime))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if (0 -ne $_.errorCode) {
+                      'Error'
+                  }
+                </ScriptBlock>
+              </TableColumnItem>  
+              <TableColumnItem>
+                <PropertyName>action</PropertyName>
+              </TableColumnItem>                          
+              <TableColumnItem>
+                <ScriptBlock>
+                  if (-not $_.userFullName) {
+                      $_.username
+                  }
+                  else {
+                      $_.userFullName
+                  }                
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>filename</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>fileId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>folderPath</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ipAddress</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>message</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+        <Name>MITPaging</Name>
+        <OutOfBand />        
+        <ViewSelectedBy>
+            <TypeName>MITPaging</TypeName>
+        </ViewSelectedBy>
+        <CustomControl>     
+          <CustomEntries>
+            <CustomEntry>                              
+                <CustomItem>
+                    <NewLine/>
+                    <Text>Total items: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>totalItems</PropertyName>
+                    </ExpressionBinding>   
+                    <Text>  Per page: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>perPage</PropertyName>
+                    </ExpressionBinding>     
+                    <Text>  Displaying page: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>page</PropertyName>
+                    </ExpressionBinding> 
+                    <Text> of </Text>
+                    <ExpressionBinding>
+                        <PropertyName>totalPages</PropertyName>
+                    </ExpressionBinding>                          
+                </CustomItem>               
+            </CustomEntry>
+          </CustomEntries>       
+        </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
