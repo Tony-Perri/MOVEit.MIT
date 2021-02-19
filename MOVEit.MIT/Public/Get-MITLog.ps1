@@ -39,7 +39,7 @@ function Get-MITLog {
     param (           
         # logId for REST call
         [Parameter(Mandatory=$true,
-                    Position=1,
+                    Position=0,
                     ValueFromPipelineByPropertyName=$true,
                     ParameterSetName='Detail')]
         [Alias('Id')]

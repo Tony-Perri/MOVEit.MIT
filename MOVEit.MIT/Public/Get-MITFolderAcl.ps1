@@ -6,7 +6,7 @@ function Get-MITFolderAcl {
     [CmdletBinding(DefaultParameterSetName='Content')]
     param (
         [Parameter(Mandatory,
-                    Position=1,
+                    Position=0,
                     ValueFromPipelineByPropertyName=$true)]
         [Alias('Id')]                    
         [string]$FolderId,

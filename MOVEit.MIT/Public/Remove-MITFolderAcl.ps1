@@ -6,7 +6,7 @@ function Remove-MITFolderAcl {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,
-        Position=1,
+        Position=0,
         ValueFromPipelineByPropertyName)]
         [Alias('Id')]                    
         [string]$FolderId,

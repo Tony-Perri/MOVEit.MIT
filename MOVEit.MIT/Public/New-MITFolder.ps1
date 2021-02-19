@@ -6,7 +6,7 @@ function New-MITFolder {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true,
-                    Position=1,
+                    Position=0,
                     ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [Alias('Id')]

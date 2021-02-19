@@ -7,7 +7,7 @@ function Get-MITUser {
     param (
         #Detail params
         [Parameter(Mandatory,
-                    Position=1,
+                    Position=0,
                     ValueFromPipelineByPropertyName=$true,
                     ParameterSetName='Detail')]
         [Alias('Id')]                    
