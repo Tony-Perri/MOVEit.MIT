@@ -1,7 +1,7 @@
 function Remove-MITUser {
     <#
     .SYNOPSIS
-        Change a MOVEit Transfer User
+        Remove a MOVEit Transfer User
     #>
     [CmdletBinding()]
     param (
