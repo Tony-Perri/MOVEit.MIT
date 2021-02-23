@@ -112,6 +112,50 @@
       </TableControl>
     </View>
     <View>
+      <Name>MITGroupSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITGroupSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+        <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>17</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Width>24</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Members</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>membersCount</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>MITFileSimple</Name>
       <ViewSelectedBy>
         <TypeName>MITFileSimple</TypeName>
