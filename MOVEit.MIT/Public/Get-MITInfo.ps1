@@ -1,6 +1,6 @@
 function Get-MITInfo {
     <#
-        .SYNOPSIS
+    .SYNOPSIS
         Get MOVEit Transfer server public org info
     #>
     [CmdletBinding()]
