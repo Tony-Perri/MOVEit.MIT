@@ -46,6 +46,10 @@ function Get-MITUser {
         [switch]$IsExactMatch,
 
         [Parameter(Mandatory=$false,
+                    ParameterSetName='List')]        
+        [Int32]$OrgId,
+
+        [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
         [int32]$Page,
 
@@ -104,6 +108,7 @@ function Get-MITUser {
                     FullName { $query['fullName'] = $FullName }
                     Email { $query['email'] = $Email }
                     IsExactMatch { $query['isExactMatch'] = $IsExactMatch}
+                    OrgId { $query['orgId'] = $OrgId }
                     Page { $query['page'] = $Page }
                     PerPage { $query['perPage'] = $PerPage }
                     SortField { $query['sortField'] = $SortField }
