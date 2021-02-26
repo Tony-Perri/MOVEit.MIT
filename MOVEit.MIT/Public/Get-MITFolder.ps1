@@ -30,7 +30,7 @@ function Get-MITFolder {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
-        [ValidateSet('name', 'type', 'path')]
+        [ValidateSet('name', 'type', 'path', 'lastContentChangeTime')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
