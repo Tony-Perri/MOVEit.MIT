@@ -16,3 +16,4 @@ Export-ModuleMember -Function $PublicFunctions.Basename
 # Update the format data to display the Log output and paging info   
 Update-FormatData -AppendPath "$PSScriptRoot\Format\MIT.Format.ps1xml" 
 Update-FormatData -AppendPath "$PSScriptRoot\Format\MITLog.Format.ps1xml" 
+Update-FormatData -AppendPath "$PSScriptRoot\Format\MITOrg.Format.ps1xml" 
