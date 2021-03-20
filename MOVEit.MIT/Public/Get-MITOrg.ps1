@@ -35,24 +35,20 @@ function Get-MITOrg {
         [switch]$IncludePaging
     )
  
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/organizations"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    }
-
-    # Send the request and write the response
     try { 
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/organizations"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        }
+
+        # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
                 $response = Invoke-RestMethod -Uri "$uri/$OrgId" -Headers $headers
@@ -72,6 +68,6 @@ function Get-MITOrg {
         }
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }

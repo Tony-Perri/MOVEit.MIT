@@ -45,35 +45,31 @@ function Get-MITFolderContent {
         [switch]$IncludePaging
     )
 
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/folders/$FolderId"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    }
-
-    # Build the query parameters.
-    $query = @{}
-    switch ($PSBoundParameters.Keys) {
-        Name { $query['name'] = $Name }
-        NewOnly { $query['newOnly'] = $NewOnly }
-        Page { $query['page'] = $Page }
-        PerPage { $query['perPage'] = $PerPage }
-        SortField { $query['sortField'] = $SortField }
-        SortDirection { $query['sortDirection'] = $SortDirection }
-    }
-
-    # Send the request and write out the response
     try {
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+        
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/folders/$FolderId"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        }
+
+        # Build the query parameters.
+        $query = @{}
+        switch ($PSBoundParameters.Keys) {
+            Name { $query['name'] = $Name }
+            NewOnly { $query['newOnly'] = $NewOnly }
+            Page { $query['page'] = $Page }
+            PerPage { $query['perPage'] = $PerPage }
+            SortField { $query['sortField'] = $SortField }
+            SortDirection { $query['sortDirection'] = $SortDirection }
+        }
+
+        # Send the request and write out the response
         switch ($PSCmdlet.ParameterSetName)
         {
             'Content' {                
@@ -93,6 +89,6 @@ function Get-MITFolderContent {
         }
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }

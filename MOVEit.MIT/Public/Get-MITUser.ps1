@@ -72,24 +72,20 @@ function Get-MITUser {
         [switch]$IncludePaging
     )
 
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
+    try {
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
 
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/users"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    } 
-    
-    # Send the request and write the response
-    try {    
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/users"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        } 
+        
+        # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
                 $response = Invoke-RestMethod -Uri "$uri/$UserId" -Headers $headers
@@ -120,6 +116,6 @@ function Get-MITUser {
         }
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }

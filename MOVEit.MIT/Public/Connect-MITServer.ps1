@@ -30,20 +30,21 @@ function Connect-MITServer {
         [pscredential]$Credential
     )     
 
-    # Clear any existing Token
-    $script:Token = @()
-
-    # Set the Base Uri
-    $script:BaseUri = "https://$Hostname/api/v1"
-    
-    # Build the request
-    $uri = "$script:BaseUri/token"
-    $params = @{ 
-        Method = 'POST'
-        ContentType = 'application/x-www-form-urlencoded'        
-        Headers = @{Accept = "application/json"}            
-    }
     try {                    
+        # Clear any existing Token
+        $script:Token = @()
+
+        # Set the Base Uri
+        $script:BaseUri = "https://$Hostname/api/v1"
+        
+        # Build the request
+        $uri = "$script:BaseUri/token"
+        $params = @{ 
+            Method = 'POST'
+            ContentType = 'application/x-www-form-urlencoded'        
+            Headers = @{Accept = "application/json"}            
+        }
+        
         $response = @{
             grant_type = 'password'
             username = $Credential.UserName
@@ -61,6 +62,6 @@ function Connect-MITServer {
         }
     } 
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }   
 }

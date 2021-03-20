@@ -42,25 +42,21 @@ function Get-MITFolder {
                     ParameterSetName='List')]        
         [switch]$IncludePaging
     )
-
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/folders"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    }
     
-    # Send the request and write the response
     try { 
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+    
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/folders"
+                
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        }
+        
+        # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
                 $response = Invoke-RestMethod -Uri "$uri/$FolderId" -Headers $headers
@@ -82,6 +78,6 @@ function Get-MITFolder {
         }
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }
