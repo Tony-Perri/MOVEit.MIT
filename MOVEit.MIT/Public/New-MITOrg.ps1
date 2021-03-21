@@ -1,24 +1,37 @@
-function New-MITGroup{
+function New-MITOrg {
     <#
     .SYNOPSIS
-        Create a MOVEit Transfer Group
+        Create a MOVEit Transfer Org
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]$Name,
 
         [Parameter()]
-        [string]$Description
-    )
+        [string]$ShortName,
 
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PassPhrase,
+
+        [Parameter()]
+        [string]$TechName,
+
+        [Parameter()]
+        [string]$TechPhone,
+
+        [Parameter()]
+        [string]$TechEmail
+    )
+    
     try {
         # Confirm the token, refreshing if necessary
         Confirm-MITToken
 
         # Set the Uri for this request
-        $uri = "$script:BaseUri/groups"
+        $uri = "$script:BaseUri/organizations"
                     
         # Set the request headers
         $headers = @{
@@ -29,8 +42,12 @@ function New-MITGroup{
         # Build the request body.
         $body = @{}
         switch ($PSBoundParameters.Keys) {
-            Name { $body['name'] = $Name }
-            Description { $body['description'] = $Description }
+            Name { $body['name'] = $Name }    
+            ShortName { $body['shortName'] = $ShortName }
+            PassPhrase { $body['passPhrase'] = $PassPhrase }
+            TechName { $body['techName'] = $TechName }
+            TechPhone { $body['techPhone'] = $TechPhone }
+            TechEmail { $body['techEmail'] = $TechEmail }
         }
 
         # Setup the params to splat to IRM
@@ -44,9 +61,10 @@ function New-MITGroup{
 
         # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITGroupSimple'
+        $response | Write-MITResponse -TypeName 'MITOrgSimple'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)
     }
+
 }

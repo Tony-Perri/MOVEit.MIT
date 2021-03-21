@@ -43,53 +43,49 @@ function New-MITUser {
         [string]$HomeFolderInUseOption
     )
     
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/users"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"        
-    }
-
-    # Build the request body.
-    $body = @{}
-    switch ($PSBoundParameters.Keys) {
-        Username { $body['username'] = $Username }    
-        FullName { $body['fullName'] = $FullName }
-        Password { $body['password'] = $Password }
-        Email { $body['email'] = $Email }
-        SourceUserId { $body['sourceUserId'] = $SourceUserId }
-        Permission { $body['permission'] = $Permission }
-        ForceChangePassword { $body['forceChangePassword'] = $ForceChangePassword }
-        OrgID { $body['orgID'] = $OrgID }
-        Notes { $body['notes'] = $Notes }
-        HomeFolderPath { $body['homeFolderPath'] = $HomeFolderPath }
-        HomeFolderInUseOption { $body['HomeFolderInUseOption'] = $HomeFolderInUseOption }
-    }
-
-    # Setup the params to splat to IRM
-    $irmParams = @{
-        Uri = $uri
-        Method = 'Post'
-        Headers = $headers
-        ContentType = 'application/json'
-        Body = ($body | ConvertTo-Json)
-    }
-
-    # Send the request and output the response
     try {
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/users"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"        
+        }
+
+        # Build the request body.
+        $body = @{}
+        switch ($PSBoundParameters.Keys) {
+            Username { $body['username'] = $Username }    
+            FullName { $body['fullName'] = $FullName }
+            Password { $body['password'] = $Password }
+            Email { $body['email'] = $Email }
+            SourceUserId { $body['sourceUserId'] = $SourceUserId }
+            Permission { $body['permission'] = $Permission }
+            ForceChangePassword { $body['forceChangePassword'] = $ForceChangePassword }
+            OrgID { $body['orgID'] = $OrgID }
+            Notes { $body['notes'] = $Notes }
+            HomeFolderPath { $body['homeFolderPath'] = $HomeFolderPath }
+            HomeFolderInUseOption { $body['HomeFolderInUseOption'] = $HomeFolderInUseOption }
+        }
+
+        # Setup the params to splat to IRM
+        $irmParams = @{
+            Uri = $uri
+            Method = 'Post'
+            Headers = $headers
+            ContentType = 'application/json'
+            Body = ($body | ConvertTo-Json)
+        }
+
+        # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
         $response | Write-MITResponse -TypeName 'MITUserSimple'
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }

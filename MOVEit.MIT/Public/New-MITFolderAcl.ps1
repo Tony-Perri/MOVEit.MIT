@@ -54,60 +54,56 @@ function New-MITFolderAcl {
         
     )
 
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/folders/$FolderId/acls"
-                
-    # Set the request headers
-    $headers = @{
-        Accept          = "application/json"
-        Authorization   = "Bearer $($script:Token.AccessToken)"        
-    }
-
-    # Build up the permissions hashtable from the switches. Use -Permissions to set share permissions.
-    if ($PSCmdlet.ParameterSetName -eq 'Switches') {
-        $Permissions = [ordered]@{
-            readFiles           = "$ReadFiles"
-            writeFiles          = "$WriteFiles"
-            deleteFiles         = "$DeleteFiles"
-            listFiles           = "$ListFiles"
-            notify              = "$Notify"
-            addDeleteSubfolders = "$AddDeleteSubfolders"
-            share               = "$Share"
-            admin               = "$Admin"
-            listUsers           = "$ListUsers"
-        }
-    }
-    
-    # Build the body for this request.  
-    $body = [ordered]@{
-        type                = $Type
-        id                  = $TypeId
-        notificationMessage = $NotificationMessage
-        permissions         = $Permissions
-    }
-
-    # Setup the params to splat to IRM
-    $irmParams = @{
-        Uri         = $uri
-        Method      = 'Post'
-        Headers     = $headers
-        ContentType = 'application/json'
-        Body        = ($body | ConvertTo-Json)
-    }
-
-    # Send the request and output the response
     try {
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/folders/$FolderId/acls"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept          = "application/json"
+            Authorization   = "Bearer $($script:Token.AccessToken)"        
+        }
+
+        # Build up the permissions hashtable from the switches. Use -Permissions to set share permissions.
+        if ($PSCmdlet.ParameterSetName -eq 'Switches') {
+            $Permissions = [ordered]@{
+                readFiles           = "$ReadFiles"
+                writeFiles          = "$WriteFiles"
+                deleteFiles         = "$DeleteFiles"
+                listFiles           = "$ListFiles"
+                notify              = "$Notify"
+                addDeleteSubfolders = "$AddDeleteSubfolders"
+                share               = "$Share"
+                admin               = "$Admin"
+                listUsers           = "$ListUsers"
+            }
+        }
+        
+        # Build the body for this request.  
+        $body = [ordered]@{
+            type                = $Type
+            id                  = $TypeId
+            notificationMessage = $NotificationMessage
+            permissions         = $Permissions
+        }
+
+        # Setup the params to splat to IRM
+        $irmParams = @{
+            Uri         = $uri
+            Method      = 'Post'
+            Headers     = $headers
+            ContentType = 'application/json'
+            Body        = ($body | ConvertTo-Json)
+        }
+
+        # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
         $response | Write-MITResponse -TypeName 'MITFolderAcl'
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
 }

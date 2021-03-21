@@ -145,31 +145,26 @@ function Get-MITLog {
         [switch]$IncludePaging
     )
     
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/logs"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    }   
-
     try {
+        # Confirm the token, refreshing if necessary
+        Confirm-MITToken
+
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/logs"
+                    
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        }   
+
+        # Send the request and write out the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
                 $response = Invoke-RestMethod -Uri "$uri/$LogId" -Headers $headers
                 $response | Write-MITResponse -TypeName 'MITLogDetail'
             }
-
             'List' {
-    
                 # Build the query string as an object to pass to the -Body parameter.  The
                 # switch works like a foreach.  This way, the query only contains 
                 # parameters that were supplied.
@@ -209,6 +204,6 @@ function Get-MITLog {
         }
     }
     catch {        
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }                  
 }

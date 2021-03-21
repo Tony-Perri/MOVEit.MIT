@@ -16,33 +16,29 @@ function Invoke-MITRestMethod {
         [Parameter(Mandatory=$false)]
         [switch]$IncludePaging
     )
-
-    # Check to see if Connect-MITServer has been called and exit with an error
-    # if it hasn't.
-    if (-not $script:BaseUri) {
-        Write-Error "BaseUri is invalid.  Try calling Connect-MITServer first."
-        return        
-    }
-
-    # Set the Uri for this request
-    $uri = "$script:BaseUri/$Resource"
-                
-    # Set the request headers
-    $headers = @{
-        Accept = "application/json"
-        Authorization = "Bearer $($script:Token.AccessToken)"
-    } 
-
-    # Additonal params that will be splatted
-    $irmParams = @{}
-    if ($Query) { $irmParams['Body'] = $Query}
-
+    
     try {
+        Confirm-MITToken
+        # Confirm the token, refreshing if necessary
+
+        # Set the Uri for this request
+        $uri = "$script:BaseUri/$Resource"
+                
+        # Set the request headers
+        $headers = @{
+            Accept = "application/json"
+            Authorization = "Bearer $($script:Token.AccessToken)"
+        } 
+
+        # Additonal params that will be splatted
+        $irmParams = @{}
+        if ($Query) { $irmParams['Body'] = $Query}
+
+        # Send the request and write out the response
         $response = Invoke-RestMethod -Uri $uri -Headers $headers @irmParams
         $response | Write-MITResponse -TypeName 'MITGeneric' -IncludePaging:$IncludePaging
     }
     catch {
-        $_
+        $PSCmdlet.ThrowTerminatingError($PSItem)
     }
-    
 }

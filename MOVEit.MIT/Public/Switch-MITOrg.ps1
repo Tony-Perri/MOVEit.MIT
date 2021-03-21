@@ -1,16 +1,14 @@
-function New-MITGroup{
+function Switch-MITOrg {
     <#
     .SYNOPSIS
-        Create a MOVEit Transfer Group
+        Switch (ie. ActAsAdmin) to a different Org.
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Name,
-
-        [Parameter()]
-        [string]$Description
+        [Parameter(Mandatory,
+                    ValueFromPipelineByPropertyName)]
+        [Alias('Id')]                    
+        [int32]$OrgId
     )
 
     try {
@@ -18,7 +16,7 @@ function New-MITGroup{
         Confirm-MITToken
 
         # Set the Uri for this request
-        $uri = "$script:BaseUri/groups"
+        $uri = "$script:BaseUri/auth/actasadmin"
                     
         # Set the request headers
         $headers = @{
@@ -27,10 +25,8 @@ function New-MITGroup{
         }
 
         # Build the request body.
-        $body = @{}
-        switch ($PSBoundParameters.Keys) {
-            Name { $body['name'] = $Name }
-            Description { $body['description'] = $Description }
+        $body = @{
+            orgId = $OrgId
         }
 
         # Setup the params to splat to IRM
@@ -44,7 +40,7 @@ function New-MITGroup{
 
         # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITGroupSimple'
+        $response | Write-MITResponse -TypeName 'MITSwitchOrg'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

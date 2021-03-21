@@ -11,8 +11,5 @@ Foreach($file in @($PublicFunctions + $PrivateFunctions)) {
     }
 }
 
-Export-ModuleMember -Function $PublicFunctions.Basename
-
-# Update the format data to display the Log output and paging info   
-Update-FormatData -AppendPath "$PSScriptRoot\Format\MIT.Format.ps1xml" 
-Update-FormatData -AppendPath "$PSScriptRoot\Format\MITLog.Format.ps1xml" 
+# Using the manifest file
+# Export-ModuleMember -Function $PublicFunctions.Basename

@@ -1,16 +1,27 @@
-function New-MITGroup{
+function New-MITRemoteAccessRule {
     <#
     .SYNOPSIS
-        Create a MOVEit Transfer Group
+        Create a MOVEit Transfer remote access rule
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Name,
+        [Parameter()]
+        [ValidateSet('Deny', 'Allow')]
+        [string]$Rule,
 
         [Parameter()]
-        [string]$Description
+        [string]$Comment,
+
+        [Parameter(Mandatory)]
+        [ValidateSet('Admin', 'EndUser')]
+        [string]$PermitType,
+
+        [Parameter()]
+        [ValidateSet('Highest', 'Middle', 'Lowest')]
+        [string]$Priority,
+
+        [Parameter(Mandatory)]
+        [string]$HostOrIP
     )
 
     try {
@@ -18,7 +29,7 @@ function New-MITGroup{
         Confirm-MITToken
 
         # Set the Uri for this request
-        $uri = "$script:BaseUri/groups"
+        $uri = "$script:BaseUri/settings/security/remoteaccess/rules"
                     
         # Set the request headers
         $headers = @{
@@ -29,8 +40,11 @@ function New-MITGroup{
         # Build the request body.
         $body = @{}
         switch ($PSBoundParameters.Keys) {
-            Name { $body['name'] = $Name }
-            Description { $body['description'] = $Description }
+            Rule { $body['rule'] = $Rule }    
+            Comment { $body['comment'] = $Comment }
+            PermitType { $body['permitType'] = $PermitType }
+            Priority { $body['priority'] = $Priority }
+            HostOrIp { $body['host'] = $HostOrIp }
         }
 
         # Setup the params to splat to IRM
@@ -44,7 +58,7 @@ function New-MITGroup{
 
         # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITGroupSimple'
+        $response | Write-MITResponse
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)
