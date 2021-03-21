@@ -42,10 +42,10 @@ Get-MITLog -SortDirection desc -PerPage 100 -IncludePaging
 ```powershell
 # Get all logs
 $page = 1
-    do {
-        $paging, $logs = Get-MITLog -SortDirection desc -Page $page -PerPage 50 -IncludePaging
-        $logs
-    } while ($page++ -lt $paging.TotalPages)
+do {
+    $paging, $logs = Get-MITLog -SortDirection desc -Page $page -PerPage 50 -IncludePaging
+    $logs
+} while ($page++ -lt $paging.TotalPages)
 ```
 ## Pipeline
 Many commands accept parameters from the pipeline
