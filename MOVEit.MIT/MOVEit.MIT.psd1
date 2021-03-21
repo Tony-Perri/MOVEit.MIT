@@ -63,11 +63,7 @@ Description = 'Powershell module for MOVEit Transfer REST API'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = @(
-    "$PSScriptRoot\Format\MIT.Format.ps1xml",
-    "$PSScriptRoot\Format\MITLog.Format.ps1xml",
-    "$PSScriptRoot\Format\MITOrg.Format.ps1xml"
-)
+FormatsToProcess = @("Format\MIT.Format.ps1xml","Format\MITLog.Format.ps1xml","Format\MITOrg.Format.ps1xml")
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
