@@ -1,3 +1,6 @@
+## 0.3.0 - April 2021
+* Add warning if more items exist and -IncludePaging was not specified.
+* Add Invoke-MITWebRequest for raw request/response
 ## 0.2.1-preview - March 2021
 #### Packages
 * Get-MITPackage

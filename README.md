@@ -57,3 +57,24 @@ Get-MITFolder -Path '/' | New-MITFolder -Name 'Test'
 # Remove a user
 Get-MITUser -Username 'user1' -IsExactMatch | Remove-MITUser
 ```
+## Packages
+Example for sending an Ad Hoc package with attachment(s)
+```powershell
+# Send a package
+$sendPackageParams = @{
+    DeliveryReceipts = $true    
+    Recipients = @(
+        (New-MITPackageRecipient -Role To -Type Unreg -Identifier 'guest1@moveitdemo.com'),
+        (New-MITPackageRecipient -Role CC -Type User -Identifier 'User 2')
+    )
+    Subject = 'The files'
+    Body = 'Here are your files.'
+    Attachments = @(
+        (Write-MITPackageAttachment -Path '~/Documents/File1.pdf'),
+        (Write-MITPackageAttachment -Path '~/Documents/File2.pdf')
+    )
+    ExpirationHours = 7*24
+}
+
+Send-MITPackage @sendPackageParams
+```

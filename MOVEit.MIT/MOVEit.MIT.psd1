@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.1'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -83,7 +83,7 @@ FunctionsToExport = @(
     'Add-MITGroupMember','Connect-MITServer','Disconnect-MITServer','Get-MITFile',
     'Get-MITFolder','Get-MITFolderAcl','Get-MITFolderContent','Get-MITGroup','Get-MITGroupMember',
     'Get-MITInfo','Get-MITLog','Get-MITMailbox','Get-MITOrg','Get-MITPackage','Get-MITTransferStatus',
-    'Get-MITUser','Invoke-MITRestMethod',
+    'Get-MITUser','Invoke-MITRestMethod', 'Invoke-MITWebRequest'
     'New-MITFolder','New-MITFolderAcl','New-MITGroup','New-MITOrg','New-MITPackageRecipient'
     'New-MITRemoteAccessRule','New-MITUser','Read-MITFile'
     'Remove-MITFolder','Remove-MITFolderAcl','Remove-MITGroupMember','Remove-MITUser','Send-MITPackage',
@@ -122,16 +122,16 @@ PrivateData = @{
 
         # A URL to the main website for this project.
         # ProjectUri = 'https://github.com/Tony-Perri/MOVEit.MIT'
-        ProjectUri = 'https://github.com/Tony-Perri/MOVEit.MIT/tree/working'
+        ProjectUri = 'https://github.com/Tony-Perri/MOVEit.MIT'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/working/CHANGELOG.md'
+        ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/master/CHANGELOG.md'
 
         # Prerelease string of this module
-        Prerelease = 'preview'
+        # Prerelease = 'preview'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false
