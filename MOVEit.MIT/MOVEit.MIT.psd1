@@ -12,10 +12,10 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Core','Desktop')
 
 # ID used to uniquely identify this module
 GUID = 'a0546bd4-0b47-4e4c-bc85-51be1a0614a4'
@@ -30,10 +30,15 @@ Author = 'Tony Perri'
 Copyright = '(c) Tony Perri. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Powershell module for MOVEit Transfer REST API'
+Description = @'
+Powershell module for MOVEit Transfer REST API.
+
+For more information on the MOVEit Transfer REST API, please visit the following:
+https://docs.ipswitch.com/MOVEit/Transfer2020_1/Api/rest/
+'@
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -63,7 +68,12 @@ Description = 'Powershell module for MOVEit Transfer REST API'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = @("Format\MIT.Format.ps1xml","Format\MITLog.Format.ps1xml","Format\MITOrg.Format.ps1xml")
+FormatsToProcess = @(
+    'Format\MIT.Format.ps1xml',
+    'Format\MITLog.Format.ps1xml',
+    'Format\MITOrg.Format.ps1xml',
+    'Format\MITPackage.Format.ps1xml'
+)
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
@@ -72,10 +82,13 @@ FormatsToProcess = @("Format\MIT.Format.ps1xml","Format\MITLog.Format.ps1xml","F
 FunctionsToExport = @(
     'Add-MITGroupMember','Connect-MITServer','Disconnect-MITServer','Get-MITFile',
     'Get-MITFolder','Get-MITFolderAcl','Get-MITFolderContent','Get-MITGroup','Get-MITGroupMember',
-    'Get-MITInfo','Get-MITLog','Get-MITOrg','Get-MITTransferStatus','Get-MITUser','Invoke-MITRestMethod',
-    'New-MITFolder','New-MITFolderAcl','New-MITGroup','New-MITOrg','New-MITRemoteAccessRule','New-MITUser',
-    'Remove-MITFolder','Remove-MITFolderAcl','Remove-MITGroupMember','Remove-MITUser','Set-MITFolder',
-    'Set-MITFolderAcl','Set-MITUser','Switch-MITOrg'
+    'Get-MITInfo','Get-MITLog','Get-MITMailbox','Get-MITOrg','Get-MITPackage','Get-MITTransferStatus',
+    'Get-MITUser','Invoke-MITRestMethod', 'Invoke-MITWebRequest'
+    'New-MITFolder','New-MITFolderAcl','New-MITGroup','New-MITOrg','New-MITPackageRecipient'
+    'New-MITRemoteAccessRule','New-MITUser','Read-MITFile'
+    'Remove-MITFolder','Remove-MITFolderAcl','Remove-MITGroupMember','Remove-MITUser','Send-MITPackage',
+    'Set-MITFolder','Set-MITFolderAcl','Set-MITPackage','Set-MITUser','Switch-MITOrg',
+    'Write-MITFile','Write-MITPackageAttachment'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -108,16 +121,17 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        # ProjectUri = 'https://github.com/Tony-Perri/MOVEit.MIT'
+        ProjectUri = 'https://github.com/Tony-Perri/MOVEit.MIT'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/master/CHANGELOG.md'
 
         # Prerelease string of this module
-        # Prerelease = ''
+        # Prerelease = 'preview'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

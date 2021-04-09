@@ -11,5 +11,4 @@ Foreach($file in @($PublicFunctions + $PrivateFunctions)) {
     }
 }
 
-# Using the manifest file
-# Export-ModuleMember -Function $PublicFunctions.Basename
+Export-ModuleMember -Function $PublicFunctions.Basename
