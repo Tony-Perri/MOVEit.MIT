@@ -1,3 +1,10 @@
+## 0.4.0 - 
+* Add support for mfa using code from authenticator app
+* Updates for MOVEit Transfer 2021
+    * Set-MITFolder support -InheritAccess parameter
+    * Set-MITFolder support -Description parameter
+    * Set-MITFolderAcl support for -OverrideBehaviourType
+    * Set-MITFolderAcl support for -EntryId
 ## 0.3.0 - April 2021
 * Add warning if more items exist and -IncludePaging was not specified.
 * Add Invoke-MITWebRequest for raw request/response

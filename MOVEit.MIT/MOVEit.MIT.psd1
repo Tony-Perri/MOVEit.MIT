@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.3.0'
+ModuleVersion = '0.4.0'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -131,7 +131,7 @@ PrivateData = @{
         ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/master/CHANGELOG.md'
 
         # Prerelease string of this module
-        # Prerelease = 'preview'
+        Prerelease = 'alpha'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false
