@@ -12,9 +12,15 @@ function Set-MITFolder {
         [Alias('Id')]
         [string]$FolderId,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [string]$Name
+        [string]$Name,
+
+        [Parameter()]        
+        [string]$Description,
+
+        [Parameter()]
+        [bool]$InheritAccess
     )
 
     try {
@@ -34,7 +40,8 @@ function Set-MITFolder {
         $body = @{}
         switch ($PSBoundParameters.Keys) {
             Name { $body['name'] = $Name }
-            # InheritPermissions { $body['inheritPermissions'] = $InheritPermissions }
+            Description { $body['description'] = $Description }
+            InheritAccess { $body['inheritAccess'] = $InheritAccess }
         }
 
         # Setup the params to splat to IRM
