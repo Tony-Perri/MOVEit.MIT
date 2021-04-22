@@ -27,7 +27,12 @@ function Connect-MITServer {
 
         # Credentials
         [Parameter(Mandatory=$true)]
-        [pscredential]$Credential
+        [pscredential]$Credential,
+
+        # OTP for MFA
+        [Parameter()]
+        [ValidatePattern('^\d{3}\s?\d{3}$')]
+        [string]$Otp
     )     
 
     try {                    
@@ -45,11 +50,41 @@ function Connect-MITServer {
             Headers = @{Accept = "application/json"}            
         }
         
-        $response = @{
-            grant_type = 'password'
-            username = $Credential.UserName
-            password= $Credential.GetNetworkCredential().Password
-            } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
+        # This try/catch block will be to catch and handle the exception that is thrown
+        # if MFA is required.
+        try {
+            $response = @{
+                grant_type = 'password'
+                username = $Credential.UserName
+                password= $Credential.GetNetworkCredential().Password
+                } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
+        }
+        catch [System.Net.Http.HttpRequestException], [System.Net.WebException] {
+            if ($_.Exception.Response.StatusCode -eq 401) {
+                $response = ($_.ErrorDetails.Message | ConvertFrom-Json)
+                $isMfaRequired = ($response.error -eq 'mfa_required')
+            }
+
+            if (-not $isMfaRequired) {
+                # Must have been some other error so let's re-throw it.
+                throw $_
+            }            
+        }
+        
+        if ($isMfaRequired) {
+            Write-Verbose "MFA Authentication is required"
+            # Resubmit to the same endpoint, using otp as the granttype, 
+            # the mfa_access_token given in the error in the mfa_access_token field,
+            # and the 6 digit code from your authenticator in the otp field.
+            if (-not $Otp) {                
+                $Otp = Read-Host -Prompt "Enter 6-digit verification code"
+            }
+            $response = @{
+                grant_type = 'otp'
+                mfa_access_token = $response.mfa_access_token
+                otp = $otp                
+                } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
+        }
 
         if ($response.access_token) {
             $script:Token = @{                    
