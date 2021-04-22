@@ -11,44 +11,55 @@ function Set-MITFolderAcl {
         [Alias('Id')]                    
         [string]$FolderId,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByType')]
         [ValidateSet('None','User','Group','Email')]
         [string]$Type,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByType')]
         [string]$TypeId,
 
         [Parameter(Mandatory,
-                    ParameterSetName='HashTable')]
+            ParameterSetName = 'ByEntry')]
+        [string]$EntryId,
+        
+        [Parameter()]
+        [ValidateSet('AddToInherited', 'OverrideInherited')]
+        [string]$OverrideBehaviourType,
+
+        # Permissions can either be provided as a hashtable or by
+        # using switches.  The hashtable will be used if specified
+        # and the switches will be ignored.
+        [Parameter()]
         [hashtable]$Permissions,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$ReadFiles,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$WriteFiles,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$DeleteFiles,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$ListFiles,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$Notify,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$AddDeleteSubfolders,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$Share,
 
-        [Parameter(ParameterSetName='Switches')]
+        [Parameter()]
         [switch]$Admin,
 
-        [Parameter(ParameterSetName='Switches')]
-        [switch]$ListUsers
-        
+        [Parameter()]
+        [switch]$ListUsers 
     )
 
     try {
@@ -64,8 +75,9 @@ function Set-MITFolderAcl {
             Authorization   = "Bearer $($script:Token.AccessToken)"        
         }
 
-        # Build up the permissions hashtable from the switches. Use -Permissions to set share permissions.
-        if ($PSCmdlet.ParameterSetName -eq 'Switches') {
+        # Build up the permissions hashtable from the switches if -Permissions was not used. 
+        # Use -Permissions to set share permissions.
+        if ( -not $PSBoundParameters.ContainsKey('Permissions')) {
             $Permissions = [ordered]@{
                 readFiles           = "$ReadFiles"
                 writeFiles          = "$WriteFiles"
@@ -78,21 +90,47 @@ function Set-MITFolderAcl {
                 listUsers           = "$ListUsers"
             }
         }
-        
-        # Build the body for this request.  
-        $body = [ordered]@{
-            type                = $Type
-            id                  = $TypeId
-            permissions         = $Permissions
-        }
 
-        # Setup the params to splat to IRM
-        $irmParams = @{
-            Uri         = $uri
-            Method      = 'Put'
-            Headers     = $headers
-            ContentType = 'application/json'
-            Body        = ($body | ConvertTo-Json)
+        switch ($PSCmdlet.ParameterSetName) {
+            ByType {
+                $body = @{
+                    type                = $Type
+                    id                  = $TypeId
+                    permissions         = $Permissions
+                }
+                
+                if ($PSBoundParameters.ContainsKey('OverrideBehaviourType')) {
+                    $body['overrideBehaviourType'] = $OverrideBehaviourType
+                }
+                                
+                # Setup the params to splat to IRM
+                $irmParams = @{
+                    Uri         = $uri
+                    Method      = 'Put'
+                    Headers     = $headers
+                    ContentType = 'application/json'
+                    Body        = ($body | ConvertTo-Json)
+                }
+            }
+
+            ByEntry {
+                $body = @{
+                    permissions = $Permissions
+                }
+                
+                if ($PSBoundParameters.ContainsKey('OverrideBehaviourType')) {
+                    $body['overrideBehaviourType'] = $OverrideBehaviourType
+                }
+                                
+                # Setup the params to splat to IRM
+                $irmParams = @{
+                    Uri         = "$uri/$EntryId"
+                    Method      = 'Patch'
+                    Headers     = $headers
+                    ContentType = 'application/json'
+                    Body        = ($body | ConvertTo-Json)
+                }
+            }
         }
 
         # Send the request and output the response
