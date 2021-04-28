@@ -5,6 +5,8 @@
     * Set-MITFolder support -Description parameter
     * Set-MITFolderAcl support for -OverrideBehaviourType
     * Set-MITFolderAcl support for -EntryId
+    * Implement Set-MITFolderMaintenance function
+    * Implement Set-MITFolderNotification function
 ## 0.3.0 - April 2021
 * Add warning if more items exist and -IncludePaging was not specified.
 * Add Invoke-MITWebRequest for raw request/response

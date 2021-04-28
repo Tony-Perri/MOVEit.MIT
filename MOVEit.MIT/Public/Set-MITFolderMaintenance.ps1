@@ -1,7 +1,7 @@
-function Set-MITFolderSetting {
+function Set-MITFolderMaintenance {
     <#
     .SYNOPSIS
-        Change a MOVEit Transfer Folder Setting(s)
+        Change a MOVEit Transfer Folder Maintenance Setting(s)
     .LINK
         https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/maintenance-1.0        
     #>
@@ -14,13 +14,31 @@ function Set-MITFolderSetting {
         [Alias('Id')]
         [string]$FolderId,
         
-        [Parameter(ParameterSetName='Maintenance')]
+        # Folder Quota params
+        [Parameter()]
+        [int64]$Quota,
+
+        [Parameter()]
+        [ValidateSet('KB', 'MB')]
+        [string]$QuotaLevel,
+
+        [Parameter()]
+        [bool]$ApplyToFilesInSubfolders,
+
+        [Parameter()]
         [int32]$DisplayNewFilesForDays,
 
-        [Parameter(ParameterSetName='Maintenance')]
+        [Parameter()]
+        [switch]$ApplyToSubfolders,
+
+        # Folder Cleanup params
+        [Parameter()]
+        [int32]$DeleteEmptySubfoldersAfterDays,
+
+        [Parameter()]
         [int32]$DeleteOldFilesAfterDays,
 
-        [Parameter(ParameterSetName='Maintenance')]
+        [Parameter()]
         [bool]$IsCleanupEnabled
     )
 
@@ -29,7 +47,7 @@ function Set-MITFolderSetting {
         Confirm-MITToken
 
         # Set the Uri for this request
-        $uri = "$script:BaseUri/folders/$FolderId"
+        $uri = "$script:BaseUri/folders/$FolderId/maintenance"
                     
         # Set the request headers
         $headers = @{
@@ -37,11 +55,28 @@ function Set-MITFolderSetting {
             Authorization = "Bearer $($script:Token.AccessToken)"        
         }
 
-        # Build the request body based on the parameter set
+        # Build the request body
         $body = @{}
 
         switch ($PSBoundParameters.Keys) {
+            Quota {
+                if (-not $body['folderQuota']) { $body['folderQuota'] = @{} }
+                $body['folderQuota']['quota'] = $Quota
+            }
+            QuotaLevel {
+                if (-not $body['folderQuota']) { $body['folderQuota'] = @{} }
+                $body['folderQuota']['quotaLevel'] = $QuotaLevel
+            }
+            ApplyToFilesInSubfolders {
+                if (-not $body['folderQuota']) { $body['folderQuota'] = @{} }
+                $body['folderQuota']['applyToFilesInSubfolders'] = $ApplyToFilesInSubfolders
+            }
             DisplayNewFilesForDays { $body['displayNewFilesForDays'] = $DisplayNewFilesForDays}
+            ApplyToSubfolders { $body['applyToSubfolders'] = $ApplyToSubfolders}
+            DeleteEmptySubfoldersAfterDays {
+                if (-not $body['folderCleanup']) { $body['folderCleanup'] = @{} }
+                $body['folderCleanup']['deleteEmptySubfoldersAfterDays'] = $DeleteEmptySubfoldersAfterDays
+            }
             DeleteOldFilesAfterDays { 
                 if (-not $body['folderCleanup']) { $body['folderCleanup'] = @{} }
                 $body['folderCleanup']['deleteOldFilesAfterDays'] = $DeleteOldFilesAfterDays
@@ -51,10 +86,7 @@ function Set-MITFolderSetting {
                 $body['folderCleanup']['isCleanupEnabled'] = $IsCleanupEnabled
             }
         }
-
-        # Set the Uri based on the parameter set
-        $uri = "$uri/maintenance"
-
+                
         # Setup the params to splat to IRM
         $irmParams = @{
             Uri = $uri

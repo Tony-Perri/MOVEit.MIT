@@ -87,7 +87,8 @@ FunctionsToExport = @(
     'New-MITFolder','New-MITFolderAcl','New-MITGroup','New-MITOrg','New-MITPackageRecipient'
     'New-MITRemoteAccessRule','New-MITUser','Read-MITFile'
     'Remove-MITFolder','Remove-MITFolderAcl','Remove-MITGroupMember','Remove-MITUser','Send-MITPackage',
-    'Set-MITFolder','Set-MITFolderAcl', 'Set-MITFolderSetting', 'Set-MITPackage','Set-MITUser','Switch-MITOrg',
+    'Set-MITFolder','Set-MITFolderAcl', 'Set-MITFolderMaintenance', 'Set-MITFolderNotification', 
+    'Set-MITPackage','Set-MITUser','Switch-MITOrg',
     'Write-MITFile','Write-MITPackageAttachment'
 )
 
