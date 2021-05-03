@@ -169,7 +169,7 @@
           <TableColumnHeader>
             <Label>Upload Stamp</Label>
             <Width>20</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
            <TableColumnHeader>
             <Label>Size</Label>
@@ -222,7 +222,7 @@
           <TableColumnHeader>
             <Label>LastUpdateTime</Label>
             <Width>20</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Type</Label>
@@ -387,7 +387,7 @@
           <TableColumnHeader>
             <Label>StartTime</Label>
             <Width>20</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Username</Label>
@@ -412,12 +412,12 @@
           <TableColumnHeader>
             <Label>Size</Label>
             <Width>10</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Rate</Label>
             <Width>10</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Status</Label>
@@ -426,7 +426,7 @@
           <TableColumnHeader>
             <Label>End Time</Label>
             <Width>20</Width>
-            <Alignment>right</Alignment>
+            <Alignment>Right</Alignment>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -493,5 +493,323 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>MITLog</Name>
+      <ViewSelectedBy>
+        <TypeName>MITLog</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>      
+         <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>10</Width>
+          </TableColumnHeader>    
+          <TableColumnHeader>
+            <Label>Log Time</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+            <Width>6</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Action</Label>
+            <Width>18</Width>
+          </TableColumnHeader>          
+          <TableColumnHeader>
+            <Label>User Full Name</Label>
+            <Width>16</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>File Name</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>File ID</Label>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Folder Name</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IPAddress</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Message</Label>            
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>  
+            <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>                   
+              <TableColumnItem>
+                <ScriptBlock>"{0,10:M/dd/yyyy}  {0,8:h:mm tt}" -f ([DateTime]::Parse($_.logtime))</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if (0 -ne $_.errorCode) {
+                      'Error'
+                  }
+                </ScriptBlock>
+              </TableColumnItem>  
+              <TableColumnItem>
+                <PropertyName>action</PropertyName>
+              </TableColumnItem>                          
+              <TableColumnItem>
+                <ScriptBlock>
+                  if (-not $_.userFullName) {
+                      $_.username
+                  }
+                  else {
+                      $_.userFullName
+                  }                
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>filename</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>fileId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>folderPath</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ipAddress</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>message</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+        <Name>MITPaging</Name>
+        <OutOfBand />        
+        <ViewSelectedBy>
+            <TypeName>MITPaging</TypeName>
+        </ViewSelectedBy>
+        <CustomControl>     
+          <CustomEntries>
+            <CustomEntry>                              
+                <CustomItem>
+                    <NewLine/>
+                    <Text>Total items: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>totalItems</PropertyName>
+                    </ExpressionBinding>   
+                    <Text>  Per page: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>perPage</PropertyName>
+                    </ExpressionBinding>     
+                    <Text>  Displaying page: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>page</PropertyName>
+                    </ExpressionBinding> 
+                    <Text> of </Text>
+                    <ExpressionBinding>
+                        <PropertyName>totalPages</PropertyName>
+                    </ExpressionBinding>                          
+                </CustomItem>               
+            </CustomEntry>
+          </CustomEntries>       
+        </CustomControl>
+    </View>
+    <View>
+      <Name>MITOrgSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITOrgSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+        <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>17</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>24</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Users</Label>
+            <Alignment>Right</Alignment>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Folders</Label>
+            <Alignment>Right</Alignment>
+            <Width>10</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Files</Label>
+            <Alignment>Right</Alignment>
+            <Width>10</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>usersCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>foldersCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>filesCount</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+        <Name>MITSwitchOrg</Name>
+        <OutOfBand />        
+        <ViewSelectedBy>
+            <TypeName>MITSwitchOrg</TypeName>
+        </ViewSelectedBy>
+        <CustomControl>     
+          <CustomEntries>
+            <CustomEntry>                              
+                <CustomItem>
+                    <NewLine/>
+                    <Text>Switched to Org:</Text>
+                    <ExpressionBinding>
+                        <PropertyName>orgId</PropertyName>
+                    </ExpressionBinding>   
+                    <Text>  Permission: </Text>
+                    <ExpressionBinding>
+                        <PropertyName>permission</PropertyName>
+                    </ExpressionBinding>     
+                </CustomItem>               
+            </CustomEntry>
+          </CustomEntries>       
+        </CustomControl>
+    </View>
+    <View>
+      <Name>MITPackageSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITPackageSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>New</Label>
+            <Width>4</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Subject</Label>
+            <Width>25</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Sender</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Recipients</Label>
+            <Width>35</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Date/Time</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.isNew) { "X" }</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>subject</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.sender.username</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.toRecipients -join ', '</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>sendStamp</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>MITMailboxSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITMailboxSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>12</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>New Packages</Label>
+            <Width>12</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>All Packages</Label>
+            <Width>12</Width>
+            <Alignment>Center</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Owner</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>newPackagesCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>allPackagesCount</PropertyName>
+              </TableColumnItem>
+               <TableColumnItem>
+                <PropertyName>ownerLoginName</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>    
   </ViewDefinitions>
 </Configuration>
