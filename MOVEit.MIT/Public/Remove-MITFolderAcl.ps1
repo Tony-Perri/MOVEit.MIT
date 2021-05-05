@@ -2,6 +2,9 @@ function Remove-MITFolderAcl {
     <#
     .SYNOPSIS
         Remove a MOVEit Transfer Folder Acl
+    .LINK
+        Delete the Access Controls for a given folder
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/DELETEapi/v1/folders/{Id}/acls-1.0        
     #>
     [CmdletBinding()]
     param (

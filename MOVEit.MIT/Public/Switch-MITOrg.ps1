@@ -2,6 +2,9 @@ function Switch-MITOrg {
     <#
     .SYNOPSIS
         Switch (ie. ActAsAdmin) to a different Org.
+    .LINK
+        Become administrator in specific organization
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/auth/actasadmin-1.0        
     #>
     [CmdletBinding()]
     param (

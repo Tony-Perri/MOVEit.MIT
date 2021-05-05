@@ -2,6 +2,9 @@ function Remove-MITUser {
     <#
     .SYNOPSIS
         Remove a MOVEit Transfer User
+    .LINK
+        Delete user
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/DELETEapi/v1/users/{Id}-1.0        
     #>
     [CmdletBinding()]
     param (

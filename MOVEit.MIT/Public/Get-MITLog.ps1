@@ -5,7 +5,7 @@ function Get-MITLog {
     .DESCRIPTION
         Get MOVEit Transfer logs from /api/v1/logs endpoint
         Requires MOVEit Transfer 2020.1 and later
-        Call New-MITToken prior to calling this function
+        Call Connect-MITServer prior to calling this function
     .EXAMPLE
         Get-MITLog -SortDirection desc
         Get logs in descending order
@@ -17,23 +17,32 @@ function Get-MITLog {
         Get logs in descending order for past 24 hours
     .EXAMPLE
         # Script to get all log entries since yesterday
-        $params = @{
+        $logFilter = @{
             SortDirection = 'desc'    
             StartDateTime = (Get-Date).Date.AddDays(-1)
             IncludeSigns = $true    
         }
-        # Run the query first to determine how many pages
-        $totalPages = (Get-MITLog @params)[0].totalPages
-        # Retrieve all pages
-        1..$totalPages | foreach-object { Get-MITLog @params -Page $_ -IncludePaging }                
+        
+        # Loop through each page of logs
+        $page = 1
+        $allLogs = @()
+        do {
+            $paging, $logs = Get-MITLog @logFilter -Page $page -PerPage 200 -IncludePaging    
+            $allLogs += $logs
+        } while ($page++ -lt $paging.totalPages)
+        
+        $allLogs               
     .INPUTS
         None
     .OUTPUTS
         Collection of log records as custom MITLog objects
         Paging info as custom MITPaging object
     .LINK
-        See link for /api/v1/token doc.
-        https://docs.ipswitch.com/MOVEit/Transfer2020_1/API/rest/index.html#tag/Logs
+        Get list of logs current user can view
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/index.html#operation/GETapi/v1/logs?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&StartDateTime={StartDateTime}&EndDateTime={EndDateTime}&Action={Action}&UserNameContains={UserNameContains}&UserId={UserId}&FileIdContains={FileIdContains}&FileNameContains={FileNameContains}&SizeComparison={SizeComparison}&Size={Size}&FolderId={FolderId}&FolderPathContains={FolderPathContains}&IpContains={IpContains}&AgentBrandContains={AgentBrandContains}&SuccessFailure={SuccessFailure}&SuppressSigns={SuppressSigns}&SuppressEmailNotes={SuppressEmailNotes}&SuppressLogViews={SuppressLogViews}-1.0
+    .LINK        
+        Get log's info
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/index.html#operation/GETapi/v1/logs/{Id}-1.0
     #>
     [CmdletBinding()]
     param (           

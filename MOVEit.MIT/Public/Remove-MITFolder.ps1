@@ -2,6 +2,9 @@ function Remove-MITFolder {
     <#
     .SYNOPSIS
         Remove a MOVEit Transfer Folder
+    .LINK
+        Delete folder
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/DELETEapi/v1/folders/{Id}-1.0        
     #>
     [CmdletBinding()]
     param (

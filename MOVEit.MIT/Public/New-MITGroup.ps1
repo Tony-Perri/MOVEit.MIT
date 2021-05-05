@@ -2,6 +2,9 @@ function New-MITGroup{
     <#
     .SYNOPSIS
         Create a MOVEit Transfer Group
+    .LINK
+        Create new group
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/groups-1.0        
     #>
     [CmdletBinding()]
     param (

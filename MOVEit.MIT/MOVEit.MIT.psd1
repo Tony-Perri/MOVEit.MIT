@@ -34,7 +34,7 @@ Description = @'
 Powershell module for MOVEit Transfer REST API.
 
 For more information on the MOVEit Transfer REST API, please visit the following:
-https://docs.ipswitch.com/MOVEit/Transfer2020_1/Api/rest/
+https://docs.ipswitch.com/MOVEit/Transfer2021/Api/rest/
 '@
 
 # Minimum version of the PowerShell engine required by this module

@@ -1,7 +1,10 @@
 function Set-MITPackage {
     <#
-        .SYNOPSIS
+    .SYNOPSIS
         Update a MOVEit Transfer package
+    .LINK
+        Partial package update
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/packages/{Id}-1.0
     #>
     [CmdletBinding()]
     param (

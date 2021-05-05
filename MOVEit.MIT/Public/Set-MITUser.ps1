@@ -2,8 +2,12 @@ function Set-MITUser {
     <#
     .SYNOPSIS
         Change a MOVEit Transfer User
+    .LINK
+        Partial user update
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/users/{Id}-1.0        
     #>
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', 'Password')]
     param (
         [Parameter(Mandatory,
                     Position=0,
