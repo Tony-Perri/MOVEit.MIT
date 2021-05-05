@@ -2,6 +2,9 @@ function New-MITFolderAcl {
     <#
     .SYNOPSIS
         Create a MOVEit Transfer Folder Acl
+    .LINK
+        Set the Access Controls for a given folder
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/folders/{Id}/acls-1.0        
     #>
     [CmdletBinding()]
     param (

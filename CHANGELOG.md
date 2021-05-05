@@ -7,6 +7,7 @@
     * Set-MITFolderAcl support for -EntryId
     * Implement Set-MITFolderMaintenance function
     * Implement Set-MITFolderNotification function
+* Update comment-based help with links to REST API endpoint doc
 ## 0.3.0 - April 2021
 * Add warning if more items exist and -IncludePaging was not specified.
 * Add Invoke-MITWebRequest for raw request/response

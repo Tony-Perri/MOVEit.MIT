@@ -1,7 +1,13 @@
 function Get-MITPackage {
     <#
-        .SYNOPSIS
-            Get MOVEit Transfer package(s)
+    .SYNOPSIS
+        Get MOVEit Transfer package(s)
+    .LINK
+        Get all packages current user can view
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/packages-1.0
+    .LINK
+        Get package info
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/packages/{Id}?Action={Action}&MailboxId={MailboxId}-1.0
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

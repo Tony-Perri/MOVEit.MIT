@@ -16,8 +16,8 @@ function Connect-MITServer {
     .OUTPUTS
         String message if connected.
     .LINK
-        See link for /api/v1/token doc.
-        https://docs.ipswitch.com/MOVEit/Transfer2020/API/rest/#operation/Auth_GetToken
+        Retrieve API token
+        https://docs.ipswitch.com/MOVEit/Transfer2021/API/rest/#operation/Auth_GetToken
     #>
     [CmdletBinding()]
     param (      

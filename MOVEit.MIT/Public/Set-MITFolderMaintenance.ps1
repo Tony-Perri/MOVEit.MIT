@@ -3,6 +3,7 @@ function Set-MITFolderMaintenance {
     .SYNOPSIS
         Change a MOVEit Transfer Folder Maintenance Setting(s)
     .LINK
+        Change Automated Maintenance Settings
         https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/maintenance-1.0        
     #>
     [CmdletBinding()]

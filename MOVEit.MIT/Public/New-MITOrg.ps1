@@ -2,6 +2,9 @@ function New-MITOrg {
     <#
     .SYNOPSIS
         Create a MOVEit Transfer Org
+    .LINK
+        Create new organization
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/organizations-1.0        
     #>
     [CmdletBinding()]
     param (

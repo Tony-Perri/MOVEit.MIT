@@ -1,7 +1,10 @@
 function Send-MITPackage {
     <#
-        .SYNOPSIS
+    .SYNOPSIS
         Send a MOVEit Transfer package
+    .LINK
+        Save or send package
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/packages-1.0        
     #>
     [CmdletBinding()]
     param (

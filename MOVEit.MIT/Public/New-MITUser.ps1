@@ -2,8 +2,12 @@ function New-MITUser {
     <#
     .SYNOPSIS
         Create a MOVEit Transfer User
+    .LINK
+        Create new user
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/users-1.0        
     #>
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', 'Password')]
     param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]

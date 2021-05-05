@@ -2,6 +2,12 @@ function Get-MITFolder {
     <#
     .SYNOPSIS
         Get MOVEit Transfer Folder(s)
+    .LINK
+        Get list of folders current user can view
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}-1.0    
+    .LINK
+        Return folder details
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/folders/{Id}-1.0         
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

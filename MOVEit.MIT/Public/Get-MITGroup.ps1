@@ -2,6 +2,9 @@ function Get-MITGroup {
     <#
     .SYNOPSIS
         Get MOVEit Transfer Group(s)
+    .LINK
+        Get list of groups current user can view
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/groups?Page={Page}&PerPage={PerPage}-1.0        
     #>
     [CmdletBinding()]
     param (

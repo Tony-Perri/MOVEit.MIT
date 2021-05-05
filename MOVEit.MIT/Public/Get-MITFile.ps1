@@ -2,6 +2,12 @@ function Get-MITFile {
     <#
     .SYNOPSIS
         Get MOVEit Transfer File(s)
+    .LINK
+        Get list of files current user can view
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/files?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&NewOnly={NewOnly}-1.0
+    .LINK
+        Return file details        
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/files/{Id}-1.0 
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

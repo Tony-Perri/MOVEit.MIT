@@ -2,6 +2,9 @@ function Get-MITOrg {
     <#
     .SYNOPSIS
         Get MOVEit Transfer Org(s)
+    .LINK
+        Get list of organizations
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/organizations?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}-1.0        
     #>
     [CmdLetBinding(DefaultParameterSetName='List')]
     param (

@@ -2,6 +2,9 @@ function Get-MITTransferStatus {
     <#
     .SYNOPSIS
         Get MOVEit Transfer Transfer Status
+    .LINK
+        Gets Transfer status information
+        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/xferstatus-1.0        
     #>
     [CmdletBinding()]
     param (
