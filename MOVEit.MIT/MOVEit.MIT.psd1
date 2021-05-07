@@ -127,7 +127,7 @@ PrivateData = @{
         ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/master/CHANGELOG.md'
 
         # Prerelease string of this module
-        Prerelease = 'alpha'
+        # Prerelease = 'alpha'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false
