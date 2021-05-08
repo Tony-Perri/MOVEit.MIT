@@ -1,4 +1,4 @@
-## 0.4.0 - 
+## 0.4.0 - May 2021
 * Add support for mfa using code from authenticator app
 * Updates for MOVEit Transfer 2021
     * Set-MITFolder support -InheritAccess parameter
