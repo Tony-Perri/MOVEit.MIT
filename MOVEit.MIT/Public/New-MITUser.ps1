@@ -31,7 +31,7 @@ function New-MITUser {
         [string]$Permission,
 
         [Parameter()]
-        [switch]$ForceChangePassword,
+        [bool]$ForceChangePassword,
 
         [Parameter()]
         [int32]$OrgID,

@@ -20,7 +20,7 @@ function Set-MITFolderNotification {
         [string]$DeliveryReceiptToSender,
 
         [Parameter()]
-        [switch]$ApplyToSubfolders,
+        [bool]$ApplyToSubfolders,
 
         [Parameter()]
         [ValidateSet('Normal', 'InboxOutbox')]

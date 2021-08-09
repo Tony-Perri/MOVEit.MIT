@@ -1,3 +1,10 @@
+## 0.4.2 - Aug 2021
+* Changed some [switch] parameters to [bool], such as the -ForceChangePassword
+  parameter.  This was because of how switch parameters were converted to JSON, but
+  also some parameters can be set to $true or $false.
+## 0.4.1 - June 2021
+* Add support for Get-MITReport
+* Add support for Invoke-MITReport
 ## 0.4.0 - May 2021
 * Add support for mfa using code from authenticator app
 * Updates for MOVEit Transfer 2021

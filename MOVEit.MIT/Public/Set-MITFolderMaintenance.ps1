@@ -30,7 +30,7 @@ function Set-MITFolderMaintenance {
         [int32]$DisplayNewFilesForDays,
 
         [Parameter()]
-        [switch]$ApplyToSubfolders,
+        [bool]$ApplyToSubfolders,
 
         # Folder Cleanup params
         [Parameter()]

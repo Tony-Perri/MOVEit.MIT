@@ -810,6 +810,43 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
-    </View>    
+    </View>  
+    <View>
+      <Name>MITReportSimple</Name>
+      <ViewSelectedBy>
+        <TypeName>MITReportSimple</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+        <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>17</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Title</Label>
+            <Width>36</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Category</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>title</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>category</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>  
   </ViewDefinitions>
 </Configuration>

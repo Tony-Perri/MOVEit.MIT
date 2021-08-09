@@ -21,7 +21,7 @@ function Set-MITUser {
         [string]$Status,
 
         [Parameter()]
-        [switch]$ForceChangePassword,
+        [bool]$ForceChangePassword,
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
