@@ -1,7 +1,7 @@
-function Write-MITPackageAttachment {
+function Set-MITPackageAttachment {
     <#
     .SYNOPSIS
-        Write (upload) an attachment for a MOVEit Transfer package
+        Set (upload) an attachment for a MOVEit Transfer package
     .LINK
         Upload attachment
         https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/packages/attachments-1.0         
