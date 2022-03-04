@@ -36,14 +36,17 @@ function Connect-MITServer {
     )     
 
     try {                    
-        # Clear any existing Token
+        # Clear any existing Token or Base Uri settings.  These will be set if the connection is
+        # successful.
         $script:Token = @()
+        $script:BaseUri = ''
 
-        # Set the Base Uri
-        $script:BaseUri = "https://$Hostname/api/v1"
+        # Set the Base Uri locally for now.  Will update the script-level variable if
+        # the connection is successfu.
+        $baseUri = "https://$Hostname/api/v1"
         
         # Build the request
-        $uri = "$script:BaseUri/token"
+        $uri = "$baseUri/token"
         $params = @{ 
             Method = 'POST'
             ContentType = 'application/x-www-form-urlencoded'        
@@ -87,6 +90,7 @@ function Connect-MITServer {
         }
 
         if ($response.access_token) {
+            $script:BaseUri = $baseUri
             $script:Token = @{                    
                 AccessToken = $Response.access_token
                 CreatedAt = $(Get-Date)
