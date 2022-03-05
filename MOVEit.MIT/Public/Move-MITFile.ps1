@@ -6,7 +6,7 @@ function Move-MITFile {
         Move file into another folder
         https://docs.ipswitch.com/MOVEit/Transfer2021_1/Api/Rest/#operation/POSTapi/v1/files/{Id}/move-1.0
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory = $true,
             Position = 0,
@@ -51,9 +51,12 @@ function Move-MITFile {
                 Body        = ($body | ConvertTo-Json)
             }
 
-            # Send the request and output the response
-            $response = Invoke-RestMethod @irmParams
-            $response | Write-MITResponse -TypeName 'MITFileDetail'            
+            if ($PSCmdlet.ShouldProcess("File: $FileId", "Moving file to different folder")) {
+                # Send the request and output the response
+                $response = Invoke-RestMethod @irmParams
+                $response | Write-MITResponse -TypeName 'MITFileDetail'   
+            }
+                     
         }
         catch {
             $PSCmdlet.ThrowTerminatingError($PSItem)
