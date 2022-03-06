@@ -11,4 +11,9 @@ Foreach($file in @($PublicFunctions + $PrivateFunctions)) {
     }
 }
 
-Export-ModuleMember -Function $PublicFunctions.Basename
+# Add aliases
+Set-Alias -Name Read-MITFile -Value Get-MITFileContent
+Set-Alias -Name Write-MITFile -Value Set-MITFileContent
+Set-Alias -Name Write-MITPackageAttachment -Value Set-MITPackageAttachment
+
+Export-ModuleMember -Function $PublicFunctions.Basename -Alias @('Read-MITFile','Write-MITFile','Write-MITPackageAttachment')

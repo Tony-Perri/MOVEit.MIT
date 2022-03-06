@@ -26,6 +26,9 @@ function Set-MITUser {
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]$Password,
+
+        [Parameter()]
+        [bool]$SendPasswordChangeNotification,
         
         [Parameter()]
         [string]$StatusNote,
@@ -84,6 +87,7 @@ function Set-MITUser {
             Status { $body['status'] = $Status }
             ForceChangePassword { $body['forceChangePassword'] = $ForceChangePassword }
             Password { $body['password'] = $Password }
+            SendPasswordChangeNotification { $body['sendPasswordChangeNotification'] = $SendPasswordChangeNotification }
             StatusNote { $body['statusNote'] = $StatusNote }
             Email { $body['email'] = $Email }
             ReceivesNotification { $body['receivesNotification'] = $ReceivesNotification }

@@ -1,3 +1,12 @@
+## 0.4.3 - 
+* Add `Copy-MITFile`.
+* Add `Move-MITFile`.
+* Add `Remove-MITFile`.
+* Add support for SendPasswordChangeNotification to Set-MITUser.  Requires Transfer v2021.1.
+* Fix an issue in Connect-MITServer where the BaseUri is set even if the connection is not successful
+* Rename `Read-MITFile` to `Get-MITFileContent`.  Added alias for `Read-MITFile`.
+* Rename `Write-MITFile` to `Set-MITFileContent`.  Added alias for `Write-MITFile`.
+* Rename `Write-MITPackageAttachment` to `Set-MITPackageAttachment`.  Added alias.
 ## 0.4.2 - Aug 2021
 * Changed some [switch] parameters to [bool], such as the -ForceChangePassword
   parameter.  This was because of how switch parameters were converted to JSON, but

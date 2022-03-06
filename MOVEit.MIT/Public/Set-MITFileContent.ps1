@@ -1,4 +1,4 @@
-function Write-MITFile {
+function Set-MITFileContent {
     <#
     .SYNOPSIS
         Write (upload) a file to a MOVEit Transfer folder
