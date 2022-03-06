@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.4.2'
+ModuleVersion = '0.4.3'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -77,8 +77,10 @@ FormatsToProcess = @('MIT.Format.ps1xml')
 FunctionsToExport = @(
     'Add-MITGroupMember'
     'Connect-MITServer'
+    'Copy-MITFile'
     'Disconnect-MITServer'
     'Get-MITFile'
+    'Get-MITFileContent'
     'Get-MITFolder'
     'Get-MITFolderAcl'
     'Get-MITFolderContent'
@@ -95,6 +97,7 @@ FunctionsToExport = @(
     'Invoke-MITRestMethod'
     'Invoke-MITReport'
     'Invoke-MITWebRequest'
+    'Move-MITFile'
     'New-MITFolder'
     'New-MITFolderAcl'
     'New-MITGroup'
@@ -102,21 +105,21 @@ FunctionsToExport = @(
     'New-MITPackageRecipient'
     'New-MITRemoteAccessRule'
     'New-MITUser'
-    'Read-MITFile'
+    'Remove-MITFile'
     'Remove-MITFolder'
     'Remove-MITFolderAcl'
-    'Remove-MITGroupMember'
+    'Remove-MITGroupMember'    
     'Remove-MITUser'
     'Send-MITPackage'
+    'Set-MITFileContent'
     'Set-MITFolder'
     'Set-MITFolderAcl'
     'Set-MITFolderMaintenance'
     'Set-MITFolderNotification'
     'Set-MITPackage'
+    'Set-MITPackageAttachment'
     'Set-MITUser'
     'Switch-MITOrg'
-    'Write-MITFile'
-    'Write-MITPackageAttachment'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -126,7 +129,7 @@ CmdletsToExport = @()
 VariablesToExport = '*'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = @()
+AliasesToExport = @('Read-MITFile','Write-MITFile','Write-MITPackageAttachment')
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
