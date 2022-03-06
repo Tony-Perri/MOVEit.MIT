@@ -20,16 +20,11 @@ function Move-MITFile {
         [string]$DestinationFolderId
     )
 
-    # Put this in a process block so it can be used to move multiple files
-    # by piping objects to it.
-    Process {
+    Begin {
         try {
             # Confirm the token, refreshing if necessary
             Confirm-MITToken
-
-            # Set the Uri for this request
-            $uri = "$script:BaseUri/files/$FileId/move"
-                    
+            
             # Set the request headers
             $headers = @{
                 Accept        = "application/json"
@@ -41,22 +36,32 @@ function Move-MITFile {
             switch ($PSBoundParameters.Keys) {
                 DestinationFolderId { $body['destinationFolderId'] = $DestinationFolderId }
             }
-
+            
             # Setup the params to splat to IRM
             $irmParams = @{
-                Uri         = $uri
                 Method      = 'Post'
                 Headers     = $headers
                 ContentType = 'application/json'
                 Body        = ($body | ConvertTo-Json)
             }
+        }
+        catch {
+            $PSCmdlet.ThrowTerminatingError($PSItem)
+        }
+    }
+
+    # Put this in a process block so it can be used to move multiple files
+    # by piping objects to it.
+    Process {
+        try {            
+            # Set the Uri for this request
+            $uri = "$script:BaseUri/files/$FileId/move"
 
             if ($PSCmdlet.ShouldProcess("File: $FileId", "Moving file to different folder")) {
                 # Send the request and output the response
-                $response = Invoke-RestMethod @irmParams
+                $response = Invoke-RestMethod -Uri $uri @irmParams
                 $response | Write-MITResponse -TypeName 'MITFileDetail'   
             }
-                     
         }
         catch {
             $PSCmdlet.ThrowTerminatingError($PSItem)
