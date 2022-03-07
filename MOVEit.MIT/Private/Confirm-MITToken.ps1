@@ -38,6 +38,7 @@ function Confirm-MITToken {
                 ContentType = 'application/x-www-form-urlencoded'
                 Body = "grant_type=refresh_token&refresh_token=$($script:Token.RefreshToken)"
                 Headers = @{Accept = "application/json"}
+                UserAgent = $script:UserAgent
             }
             
             $response = Invoke-RestMethod @params

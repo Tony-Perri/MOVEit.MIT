@@ -34,6 +34,7 @@ function Disconnect-MITServer {
             Headers     = $headers
             ContentType = 'application/x-www-form-urlencoded'
             Body        =  $body
+            UserAgent   =  $script:UserAgent
         }
 
         # Send the request and output the response

@@ -60,7 +60,7 @@ function Connect-MITServer {
                 grant_type = 'password'
                 username = $Credential.UserName
                 password= $Credential.GetNetworkCredential().Password
-                } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
+                } | Invoke-RestMethod -Uri $uri @params -UserAgent $script:UserAgent
         }
         catch [System.Net.Http.HttpRequestException], [System.Net.WebException] {
             if ($_.Exception.Response.StatusCode -eq 401) {
@@ -86,7 +86,7 @@ function Connect-MITServer {
                 grant_type = 'otp'
                 mfa_access_token = $response.mfa_access_token
                 otp = $otp                
-                } | Invoke-RestMethod -Uri $uri @params -UserAgent 'MOVEit REST API'
+                } | Invoke-RestMethod -Uri $uri @params -UserAgent $script:UserAgent
         }
 
         if ($response.access_token) {
