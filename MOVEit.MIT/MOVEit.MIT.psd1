@@ -159,7 +159,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/master/CHANGELOG.md'
+        ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
         Prerelease = 'alpha'
