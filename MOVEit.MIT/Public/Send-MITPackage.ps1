@@ -52,18 +52,6 @@ function Send-MITPackage {
     )
        
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/packages"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Build the request body.
         $requestBody = @{}
         switch ($PSBoundParameters.Keys) {
@@ -84,18 +72,15 @@ function Send-MITPackage {
 
         # Setup the params to splat to IRM
         $irmParams = @{
-            Uri = $uri
+            Resource = "packages"
             Method = 'Post'
-            Headers = $headers
             ContentType = 'application/json'
             Body = ($requestBody | ConvertTo-Json)
         }
 
-        Write-Verbose $irmParams.Body
-
         # Send the request and output the response
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITPackageDetail'
+        Invoke-MITRequest @irmParams |
+            Write-MITResponse -TypeName 'MITPackageDetail'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

@@ -65,17 +65,8 @@ function Get-MITPackage {
     )
 
     try { 
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-    
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/packages"
-                
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        }
+        # Set the resource for this request
+        $resource = "packages"
         
         # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
@@ -85,8 +76,8 @@ function Get-MITPackage {
                     Action { $query['action'] = $Action }
                     MailboxId { $query['mailboxId'] = $MailboxId }
                 }
-                $response = Invoke-RestMethod -Uri "$uri/$PackageId" -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITPackageDetail'
+                Invoke-MITRequest -Resource "$resource/$PackageId" -Body $query |
+                    Write-MITResponse -Typename 'MITPackageDetail'
             }
             'List' {            
                 $query = @{}
@@ -100,8 +91,8 @@ function Get-MITPackage {
                     SortField { $query['sortField'] = $SortField }
                     SortDirection { $query['sortDirection'] = $SortDirection }
                 }
-                $response = Invoke-RestMethod -Uri $uri -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITPackageSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource $resource -Body $query |
+                    Write-MITResponse -Typename 'MITPackageSimple' -IncludePaging:$IncludePaging
             }
         }
     }

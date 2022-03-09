@@ -50,23 +50,14 @@ function Get-MITFolder {
     )
     
     try { 
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-    
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/folders"
-                
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        }
+        # Set the resource for this request
+        $resource = "folders"
         
         # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
-                $response = Invoke-RestMethod -Uri "$uri/$FolderId" -Headers $headers
-                $response | Write-MITResponse -Typename 'MITFolderDetail'
+                Invoke-MITRequest -Resource "$resource/$FolderId" |
+                    Write-MITResponse -Typename 'MITFolderDetail'
             }
             'List' {            
                 $query = @{}
@@ -78,8 +69,8 @@ function Get-MITFolder {
                     SortField { $query['sortField'] = $SortField }
                     SortDirection { $query['sortDirection'] = $SortDirection }
                 }
-                $response = Invoke-RestMethod -Uri $uri -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource $resource -Body $query |
+                    Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
             }
         }
     }

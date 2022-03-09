@@ -69,18 +69,9 @@ function Set-MITFolderAcl {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/folders/$FolderId/acls"
+        # Set the resource for this request
+        $resource = "folders/$FolderId/acls"
                     
-        # Set the request headers
-        $headers = @{
-            Accept          = "application/json"
-            Authorization   = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Build up the permissions hashtable from the switches if -Permissions was not used. 
         # Use -Permissions to set share permissions.
         if ( -not $PSBoundParameters.ContainsKey('Permissions')) {
@@ -111,9 +102,8 @@ function Set-MITFolderAcl {
                                 
                 # Setup the params to splat to IRM
                 $irmParams = @{
-                    Uri         = $uri
+                    Resource    = $resource
                     Method      = 'Put'
-                    Headers     = $headers
                     ContentType = 'application/json'
                     Body        = ($body | ConvertTo-Json)
                 }
@@ -130,9 +120,8 @@ function Set-MITFolderAcl {
                                 
                 # Setup the params to splat to IRM
                 $irmParams = @{
-                    Uri         = "$uri/$EntryId"
+                    Resource    = "$resource/$EntryId"
                     Method      = 'Patch'
-                    Headers     = $headers
                     ContentType = 'application/json'
                     Body        = ($body | ConvertTo-Json)
                 }
@@ -140,8 +129,8 @@ function Set-MITFolderAcl {
         }
 
         # Send the request and output the response
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITFolderAcl'
+        Invoke-MITRequest @irmParams |
+            Write-MITResponse -TypeName 'MITFolderAcl'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

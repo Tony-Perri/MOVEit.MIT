@@ -82,27 +82,18 @@ function Get-MITUser {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/users"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        } 
+        # Set the resource for this request
+        $resource = "users"
         
         # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
-                $response = Invoke-RestMethod -Uri "$uri/$UserId" -Headers $headers
-                $response | Write-MITResponse -TypeName 'MITUserDetail'
+                Invoke-MITRequest -Resource "$resource/$UserId" |
+                    Write-MITResponse -TypeName 'MITUserDetail'
             }
             'Self' {
-                $response = Invoke-RestMethod -Uri "$uri/self" -Headers $headers
-                $response | Write-MITResponse -TypeName 'MITUserDetail'
+                Invoke-MITRequest -Resource "$resource/self" |
+                    Write-MITResponse -TypeName 'MITUserDetail'
             }
             'List' {
                 $query = @{}
@@ -119,8 +110,8 @@ function Get-MITUser {
                     SortField { $query['sortField'] = $SortField }
                     SortDirection { $query['sortDirection'] = $SortDirection }
                 }
-                $response = Invoke-RestMethod -Uri $uri -Headers $headers -Body $query
-                $response | Write-MITResponse -TypeName 'MITUserSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource "$resource" -Body $query |
+                    Write-MITResponse -TypeName 'MITUserSimple' -IncludePaging:$IncludePaging
             }
         }
     }

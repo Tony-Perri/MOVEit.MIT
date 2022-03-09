@@ -44,18 +44,6 @@ function Set-MITFolderMaintenance {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/folders/$FolderId/maintenance"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Build the request body
         $body = @{}
 
@@ -90,16 +78,15 @@ function Set-MITFolderMaintenance {
                 
         # Setup the params to splat to IRM
         $irmParams = @{
-            Uri = $uri
+            Resource = "folders/$FolderId/maintenance"
             Method = 'Patch'
-            Headers = $headers
             ContentType = 'application/json'
             Body = ($body | ConvertTo-Json)
         }
 
         # Send the request and output the response
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse # -TypeName 'MITFolderSimple'
+        Invoke-MITRequest @irmParams |
+            Write-MITResponse # -TypeName 'MITFolderSimple'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

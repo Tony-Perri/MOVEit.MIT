@@ -155,23 +155,14 @@ function Get-MITLog {
     )
     
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/logs"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        }   
+        # Set the resource for this request
+        $resource = "logs"
 
         # Send the request and write out the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
-                $response = Invoke-RestMethod -Uri "$uri/$LogId" -Headers $headers
-                $response | Write-MITResponse -TypeName 'MITLogDetail'
+                Invoke-MITRequest -Resource "$resource/$LogId" |
+                    Write-MITResponse -TypeName 'MITLogDetail'
             }
             'List' {
                 # Build the query string as an object to pass to the -Body parameter.  The
@@ -204,11 +195,9 @@ function Get-MITLog {
 
                 Write-Verbose ($query | Out-String)
             
-                # Call the REST Api
-                $response = Invoke-RestMethod -Uri $uri -Method Get -Headers $headers -Body $query
-
-                # Write the response
-                $response | Write-MITResponse -TypeName 'MITLog' -IncludePaging:$IncludePaging
+                # Send the request and write out the response
+                Invoke-MITRequest -Resource $resource -Body $query |
+                    Write-MITResponse -TypeName 'MITLog' -IncludePaging:$IncludePaging
             }
         }
     }

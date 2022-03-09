@@ -20,47 +20,32 @@ function Copy-MITFile {
         [string]$DestinationFolderId
     )
 
-    Begin {
-        try {
-            # Confirm the token, refreshing if necessary
-            Confirm-MITToken
-         
-            # Set the request headers
-            $headers = @{
-                Accept        = "application/json"
-                Authorization = "Bearer $($script:Token.AccessToken)"        
-            }
-
-            # Build the request body.
-            $body = @{}
-            switch ($PSBoundParameters.Keys) {
-                DestinationFolderId { $body['destinationFolderId'] = $DestinationFolderId }
-            }
-
-            # Setup the params to splat to IRM
-            $irmParams = @{
-                Method      = 'Post'
-                Headers     = $headers
-                ContentType = 'application/json'
-                Body        = ($body | ConvertTo-Json)
-            }
+    begin {
+        # Build the request body.
+        $body = @{}
+        switch ($PSBoundParameters.Keys) {
+            DestinationFolderId { $body['destinationFolderId'] = $DestinationFolderId }
         }
-        catch {
-            $PSCmdlet.ThrowTerminatingError($PSItem)
-        }
+
+        # Setup the params to splat to IRM
+        $irmParams = @{
+            Method      = 'Post'
+            ContentType = 'application/json'
+            Body        = ($body | ConvertTo-Json)
+        }        
     }
 
     # Put this in a process block so it can be used to move multiple files
     # by piping objects to it.
-    Process {
+    process {
         try {
             # Set the Uri for this request
-            $uri = "$script:BaseUri/files/$FileId/copy"
+            $resource = "files/$FileId/copy"
                 
             if ($PSCmdlet.ShouldProcess("File: $FileId", "Copying file to different folder")) {
                 # Send the request and output the response
-                $response = Invoke-RestMethod -Uri $uri @irmParams
-                $response | Write-MITResponse -TypeName 'MITFileDetail'     
+                Invoke-MITRequest -Resource $resource @irmParams |
+                    Write-MITResponse -TypeName 'MITFileDetail'     
             }                     
         }
         catch {

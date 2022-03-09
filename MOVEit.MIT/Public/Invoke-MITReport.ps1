@@ -18,27 +18,21 @@ function Invoke-MITReport {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/reports/$ReportId/results/download"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/octet-stream"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Build the query parameters.
         $query = @{}
         switch ($PSBoundParameters.Keys) {
             Format { $query['format'] = $Format }
         }
 
+        # Setup the params to splat to IRM
+        $irmParams = @{
+            Resource = "reports/$ReportId/results/download"
+            Accept = "application/octet-stream"
+            Body = $query
+        }
+        
         # Send the request and write out the response
-        $response = Invoke-RestMethod -Uri "$uri" -Headers $headers -Body $query
-        $response | Write-Output
+        Invoke-MITRequest @irmParams
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

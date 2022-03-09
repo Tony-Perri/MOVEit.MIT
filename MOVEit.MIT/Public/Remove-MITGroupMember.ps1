@@ -19,28 +19,12 @@ function Remove-MITGroupMember {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/groups/$GroupId/members/$UserId"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
-        # Setup the params to splat to IRM
-        $irmParams = @{
-            Uri         = $uri
-            Method      = 'Delete'
-            Headers     = $headers
-        }
+        # Set the resource for this request
+        $resource = "groups/$GroupId/members/$UserId"
 
         # Send the request and output the response
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITUserSimple'
+        Invoke-MITRequest -Resource $resource -Method 'Delete' |
+            Write-MITResponse -TypeName 'MITUserSimple'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

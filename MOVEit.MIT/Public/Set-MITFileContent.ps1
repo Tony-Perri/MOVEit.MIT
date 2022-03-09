@@ -36,18 +36,6 @@ function Set-MITFileContent {
             Write-Error "Write-MITPackageAttachment requires PowerShell 6 or later" -ErrorAction Stop
         }
 
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/folders/$FolderId/files"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Get the fileinfo
         $fileinfo = Get-Item -Path $Path
         Write-Verbose "File to upload: $($fileinfo.FullName)"
@@ -64,9 +52,8 @@ function Set-MITFileContent {
 
         # Setup the params to splat to IRM
         $irmParams = @{
-            Uri = $uri
+            Resource = "folders/$FolderId/files"
             Method = 'Post'
-            Headers = $headers
             Form = $form            
         }
 
@@ -76,8 +63,8 @@ function Set-MITFileContent {
             $irmParams['TransferEncoding'] = 'chunked'
         }
 
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -Typename 'MITFileSimple'
+        Invoke-MITRequest @irmParams |
+            Write-MITResponse -Typename 'MITFileSimple'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

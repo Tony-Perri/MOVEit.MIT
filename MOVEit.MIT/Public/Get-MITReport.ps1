@@ -18,17 +18,8 @@ function Get-MITReport {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
         # Set the Uri for this request
-        $uri = "$script:BaseUri/reports"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        } 
+        $resource = "reports"
 
         # Build the query parameters.
         $query = @{}
@@ -38,8 +29,8 @@ function Get-MITReport {
         }
 
         # Send the request and write out the response
-        $response = Invoke-RestMethod -Uri "$uri" -Headers $headers -Body $query
-        $response | Write-MITResponse -Typename 'MITReportSimple' -IncludePaging:$IncludePaging
+        Invoke-MITRequest -Resource "$resource" -Body $query |
+            Write-MITResponse -Typename 'MITReportSimple' -IncludePaging:$IncludePaging
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

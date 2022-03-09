@@ -55,18 +55,9 @@ function Get-MITFolderContent {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-        
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/folders/$FolderId"
+        # Set the resource for this request
+        $resource = "folders/$FolderId"
                     
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        }
-
         # Build the query parameters.
         $query = @{}
         switch ($PSBoundParameters.Keys) {
@@ -82,18 +73,18 @@ function Get-MITFolderContent {
         switch ($PSCmdlet.ParameterSetName)
         {
             'Content' {                
-                $response = Invoke-RestMethod -Uri "$uri/content" -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITFolderContent' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource "$resource/content" -Body $query |
+                    Write-MITResponse -Typename 'MITFolderContent' -IncludePaging:$IncludePaging
             }
 
             'Subfolder' {
-                $response = Invoke-RestMethod -Uri "$uri/subfolders" -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource "$resource/subfolders" -Body $query |
+                    Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
             }
 
             'File' {
-                $response = Invoke-RestMethod -Uri "$uri/files" -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITFileSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource "$resource/files" -Body $query |
+                    Write-MITResponse -Typename 'MITFileSimple' -IncludePaging:$IncludePaging
             }
         }
     }

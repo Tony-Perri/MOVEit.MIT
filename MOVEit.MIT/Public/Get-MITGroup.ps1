@@ -19,17 +19,8 @@ function Get-MITGroup {
     )  
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/groups"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        } 
+        # Set the resource for this request
+        $resource = "groups"
 
         # Build the query parameters.
         $query = @{}
@@ -39,8 +30,8 @@ function Get-MITGroup {
         }
 
         # Send the request and write out the response
-        $response = Invoke-RestMethod -Uri "$uri" -Headers $headers -Body $query
-        $response | Write-MITResponse -Typename 'MITGroupSimple' -IncludePaging:$IncludePaging
+        Invoke-MITRequest -Resource "$resource" -Body $query |
+            Write-MITResponse -Typename 'MITGroupSimple' -IncludePaging:$IncludePaging
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

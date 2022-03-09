@@ -16,37 +16,14 @@ function Remove-MITFile {
         [string]$FileId
     )
 
-    Begin {
-        try{
-            # Confirm the token, refreshing if necessary
-            Confirm-MITToken
-            
-            # Set the request headers
-            $headers = @{
-                Accept        = "application/json"
-                Authorization = "Bearer $($script:Token.AccessToken)"        
-            }
-
-            # Setup the params to splat to IRM
-            $irmParams = @{
-                Method  = 'Delete'
-                Headers = $headers
-            }
-        }
-        catch {
-            $PSCmdlet.ThrowTerminatingError($PSItem) 
-        }
-    }
-
-    Process {
+    process {
         try {
             # Set the Uri for this request
-            $uri = "$script:BaseUri/files/$FileId"
+            $resource = "files/$FileId"
 
             if ($PSCmdlet.ShouldProcess("File: $FileId", "Deleting file")) {
                 # Send the request and output the response
-                $response = Invoke-RestMethod -Uri $uri @irmParams
-                $response 
+                Invoke-MITRequest -Resource $resource -Method 'Delete'
             }            
         }
         catch {

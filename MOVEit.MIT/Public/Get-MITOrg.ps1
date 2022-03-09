@@ -39,23 +39,14 @@ function Get-MITOrg {
     )
  
     try { 
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/organizations"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"
-        }
+        # Set the resource for this request
+        $resource = "organizations"
 
         # Send the request and write the response
         switch ($PSCmdlet.ParameterSetName) {
             'Detail' {
-                $response = Invoke-RestMethod -Uri "$uri/$OrgId" -Headers $headers
-                $response | Write-MITResponse -Typename 'MITOrgDetail'
+                Invoke-MITRequest -Resource "$resource/$OrgId" |
+                    Write-MITResponse -Typename 'MITOrgDetail'
             }
             'List' {            
                 $query = @{}
@@ -65,8 +56,8 @@ function Get-MITOrg {
                     SortField { $query['sortField'] = $SortField }
                     SortDirection { $query['sortDirection'] = $SortDirection }
                 }
-                $response = Invoke-RestMethod -Uri $uri -Headers $headers -Body $query
-                $response | Write-MITResponse -Typename 'MITOrgSimple' -IncludePaging:$IncludePaging
+                Invoke-MITRequest -Resource $resource -Body $query |
+                    Write-MITResponse -Typename 'MITOrgSimple' -IncludePaging:$IncludePaging
             }
         }
     }

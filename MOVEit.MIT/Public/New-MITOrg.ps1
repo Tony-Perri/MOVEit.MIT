@@ -30,18 +30,6 @@ function New-MITOrg {
     )
     
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/organizations"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/json"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Build the request body.
         $body = @{}
         switch ($PSBoundParameters.Keys) {
@@ -55,16 +43,15 @@ function New-MITOrg {
 
         # Setup the params to splat to IRM
         $irmParams = @{
-            Uri = $uri
+            Resource = "organizations"
             Method = 'Post'
-            Headers = $headers
             ContentType = 'application/json'
             Body = ($body | ConvertTo-Json)
         }
 
         # Send the request and output the response
-        $response = Invoke-RestMethod @irmParams
-        $response | Write-MITResponse -TypeName 'MITOrgSimple'
+        Invoke-MITRequest @irmParams |
+            Write-MITResponse -TypeName 'MITOrgSimple'
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

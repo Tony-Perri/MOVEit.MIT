@@ -21,22 +21,10 @@ function Get-MITFileContent {
     )
 
     try {
-        # Confirm the token, refreshing if necessary
-        Confirm-MITToken
-
-        # Set the Uri for this request
-        $uri = "$script:BaseUri/files/$FileId/download"
-                    
-        # Set the request headers
-        $headers = @{
-            Accept = "application/octet-stream"
-            Authorization = "Bearer $($script:Token.AccessToken)"        
-        }
-
         # Setup the params to splat to IRM
         $irmParams = @{
-            Uri = $uri
-            Headers = $headers
+            Resource = "files/$FileId/download"
+            Accept = "application/octet-stream"
         }
 
         # Add the -OutFile param if specified, otherwise the content
@@ -56,7 +44,7 @@ function Get-MITFileContent {
             }
             
             # Send the request
-            Invoke-RestMethod @irmParams -OutFile $newPath
+            Invoke-MITRequest @irmParams -OutFile $newPath
             
             # Output the path as an object
             Write-Output ([PSCustomObject]@{
@@ -66,7 +54,7 @@ function Get-MITFileContent {
         }
         else {
             # Send the request and output the response
-            Invoke-RestMethod @irmParams
+            Invoke-MITRequest @irmParams
         }
     }
     catch {
