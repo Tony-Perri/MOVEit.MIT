@@ -7,4 +7,4 @@ $script:BaseUri = ''
 $script:Token = @()
 
 # User-Agent string to use
-$script:UserAgent = "MOVEit.MIT"
+$script:UserAgent = "MOVEit API"
