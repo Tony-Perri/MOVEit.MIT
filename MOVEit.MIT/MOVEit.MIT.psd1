@@ -116,6 +116,7 @@ FunctionsToExport = @(
     'Set-MITFolderAcl'
     'Set-MITFolderMaintenance'
     'Set-MITFolderNotification'
+    'Set-MITOrg'
     'Set-MITPackage'
     'Set-MITPackageAttachment'
     'Set-MITUser'
