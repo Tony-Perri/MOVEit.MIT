@@ -15,7 +15,10 @@ function Add-MITGroupMember{
         [string]$GroupId,
 
         [Parameter(Mandatory)]
-        [string[]]$UserIds
+        [string[]]$UserIds,        
+
+        [Parameter()]
+        [switch]$IncludePaging
     )
     
     try {
@@ -23,7 +26,7 @@ function Add-MITGroupMember{
         $body = @{}
         switch ($PSBoundParameters.Keys) {
             GroupId { $body['id'] = $GroupId }
-            UserIds { $body['userIds'] = $UserIds }
+            UserIds { $body['userIds'] = $UserIds }            
         }
 
         # Setup the params to splat to IRM
@@ -36,7 +39,7 @@ function Add-MITGroupMember{
 
         # Send the request and output the response
         Invoke-MITRequest @irmParams |
-            Write-MITResponse -TypeName 'MITUserSimple'
+            Write-MITResponse -TypeName 'MITUserSimple' -IncludePaging:$IncludePaging
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)
