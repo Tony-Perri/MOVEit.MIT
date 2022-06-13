@@ -1,6 +1,9 @@
-## 0.4.4 - Mar 2022
+## 0.4.4 - Jun 2022
 * Refactor calls to Invoke-RestMethod to call Invoke-MITRequest instead.
 * Add `Set-MITOrg`.
+* Add -IncludePaging switch to Add-MITGroupMember, even though the REST endpoint doesn't
+  support the Page or PerPage parameters, in order to suppress warnings if a group has more than
+  25 members
 ## 0.4.3 - Mar 2022
 * Add `Copy-MITFile`.
 * Add `Move-MITFile`.
