@@ -1,5 +1,6 @@
 ## 0.4.5 -
-* 
+* Set-MITFileContent: Make HashType a parameter
+* Set-MITFileContent: Use chunked for files -ge 20MB (previously -ge 2GB)
 ## 0.4.4 - Jun 2022
 * Refactor calls to Invoke-RestMethod to call Invoke-MITRequest instead.
 * Add `Set-MITOrg`.
