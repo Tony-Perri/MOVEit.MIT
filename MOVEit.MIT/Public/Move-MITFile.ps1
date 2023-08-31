@@ -4,7 +4,7 @@ function Move-MITFile {
         Move a MOVEit Transfer file(s) to another folder
     .LINK
         Move file into another folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021_1/Api/Rest/#operation/POSTapi/v1/files/{Id}/move-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023//Api/Rest/#operation/POSTapi/v1/files/{Id}/move-1.0
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param (

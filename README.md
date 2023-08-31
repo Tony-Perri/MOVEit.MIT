@@ -1,5 +1,5 @@
 # MOVEit.MIT
-MOVEit.MIT is a PowerShell module for using the [MOVEit Transfer REST API](https://docs.ipswitch.com/MOVEit/Transfer2021/Api/rest/).  *Please note - This is currently a work-in-progress and not all endpoints have been implemented.*  
+MOVEit.MIT is a PowerShell module for using the [MOVEit Transfer REST API](https://docs.ipswitch.com/MOVEit/Transfer2023/Api/rest/).  *Please note - This is currently a work-in-progress and not all endpoints have been implemented.*  
 ## Features
 - PowerShell commands map, as much as possible, directly to REST API endpoints.
 - Commands set the type on output objects for formatting using .format.ps1xml file
@@ -47,6 +47,7 @@ do {
     $logs
 } while ($page++ -lt $paging.TotalPages)
 ```
+As of v.0.4.5, most of the `Get-MIT*` cmdlets now support the `-All` parameter.  This automates looping through all pages and returning all the results.  A warning is displayed if the total items exceeds 5000.
 ## Pipeline
 Many commands accept parameters from the pipeline
 ```powershell

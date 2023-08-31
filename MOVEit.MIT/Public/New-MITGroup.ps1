@@ -4,7 +4,7 @@ function New-MITGroup{
         Create a MOVEit Transfer Group
     .LINK
         Create new group
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/groups-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/groups-1.0        
     #>
     [CmdletBinding()]
     param (

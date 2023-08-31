@@ -4,7 +4,7 @@ function Get-MITOrg {
         Get MOVEit Transfer Org(s)
     .LINK
         Get list of organizations
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/organizations?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/organizations?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}-1.0        
     #>
     [CmdLetBinding(DefaultParameterSetName='List')]
     param (
@@ -25,17 +25,24 @@ function Get-MITOrg {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('name', 'id')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]                    
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory, ParameterSetName='ListAll')]
+        [switch]$All
     )
  
     try { 
@@ -58,6 +65,9 @@ function Get-MITOrg {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITOrgSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITOrg} -BoundParameters $PSBoundParameters
             }
         }
     }

@@ -4,7 +4,7 @@ function Add-MITGroupMember{
         Add MOVEit Transfer Group Member(s)
     .LINK
         Add members(s) to group
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/groups/{Id}/members-1.0    
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/groups/{Id}/members-1.0    
     #>
     [CmdletBinding()]
     param (

@@ -4,7 +4,7 @@ function Set-MITFolderNotification {
         Change a MOVEit Transfer Folder Notification Setting(s)
     .LINK
         Change folder update notifications
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/notifications-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/notifications-1.0        
     #>
     [CmdletBinding()]
     param (

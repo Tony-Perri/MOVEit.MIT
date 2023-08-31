@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.4.4'
+ModuleVersion = '0.4.5'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -34,7 +34,7 @@ Description = @'
 Powershell module for MOVEit Transfer REST API.
 
 For more information on the MOVEit Transfer REST API, please visit the following:
-https://docs.ipswitch.com/MOVEit/Transfer2021/Api/rest/
+https://docs.ipswitch.com/MOVEit/Transfer2023/Api/rest/
 '@
 
 # Minimum version of the PowerShell engine required by this module

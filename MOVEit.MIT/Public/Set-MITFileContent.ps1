@@ -4,7 +4,7 @@ function Set-MITFileContent {
         Write (upload) a file to a MOVEit Transfer folder
     .LINK
         Upload file into folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/folders/{Id}/files?UploadType={UploadType}-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/folders/{Id}/files?UploadType={UploadType}-1.0        
     #>
     [CmdletBinding()]
     param (
@@ -27,6 +27,10 @@ function Set-MITFileContent {
         [string]$Path,
 
         [Parameter(Mandatory=$false)]
+        [ValidateSet('SHA-1', 'SHA-256', 'SHA-384', 'SHA-512')]
+        [string]$HashType,
+
+        [Parameter(Mandatory=$false)]
         [string]$Comments
     )
 
@@ -39,26 +43,34 @@ function Set-MITFileContent {
         # Get the fileinfo
         $fileinfo = Get-Item -Path $Path
         Write-Verbose "File to upload: $($fileinfo.FullName)"
-        $filehash = Get-FileHash -Algorithm SHA256 -Path $fileinfo.FullName
-        Write-Verbose "File hash: $($filehash.Algorithm) $($filehash.Hash)"
               
         # Build the request form
         $form = @{
-            comments = $Comments
-            hashtype = $filehash.Algorithm -replace 'SHA', 'SHA-' #Add the dash
-            hash = $filehash.Hash
             file = $fileinfo
+        }
+        
+        # Process optional parameters if present
+        switch ($PSBoundParameters.Keys) {
+            Comments { $form['comments'] = $Comments }
+            HashType {
+                # Compute the hash
+                $filehash = Get-FileHash -Path $fileinfo.FullName -Algorithm ($HashType -replace '-', '')
+                Write-Verbose "File hash: $($filehash.Algorithm) $($filehash.Hash)"
+                $form['hashtype'] = $HashType
+                $form['hash'] = $filehash.Hash
+            }
         }
 
         # Setup the params to splat to IRM
         $irmParams = @{
             Resource = "folders/$FolderId/files"
             Method = 'Post'
+            ContentType = 'multipart/form-data'
             Form = $form            
         }
 
-        # If the file is over 2GB switch to chunked
-        if ($fileinfo.Length -gt [int32]::MaxValue) {
+        # If the file 20MB or larger switch to chunked
+        if ($fileinfo.Length -ge 20MB) {
             Write-Verbose 'Using Transfer-Encoding: chunked'
             $irmParams['TransferEncoding'] = 'chunked'
         }

@@ -1,3 +1,8 @@
+## 0.4.5 - Sep 2023
+* `Set-MITFileContent`: Make HashType a parameter
+* `Set-MITFileContent`: Use chunked for files -ge 20MB (previously -ge 2GB)
+* `Get-MIT*` cmdlets: Add `-All` parameter to  to automatically return all results
+* Updated help links to Transfer2023 API documentation
 ## 0.4.4 - Jun 2022
 * Refactor calls to Invoke-RestMethod to call Invoke-MITRequest instead.
 * Add `Set-MITOrg`.

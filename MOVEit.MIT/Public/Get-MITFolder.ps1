@@ -4,10 +4,10 @@ function Get-MITFolder {
         Get MOVEit Transfer Folder(s)
     .LINK
         Get list of folders current user can view
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}-1.0    
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/PATCHapi/v1/folders/{Id}-1.0    
     .LINK
         Return folder details
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/folders/{Id}-1.0         
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/folders/{Id}-1.0         
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (
@@ -20,10 +20,14 @@ function Get-MITFolder {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$Name,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$Path,
 
         [Parameter(Mandatory=$false,
@@ -36,17 +40,25 @@ function Get-MITFolder {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('name', 'type', 'path', 'lastContentChangeTime')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory=$true,
+                    ParameterSetName='ListAll')]        
+        [switch]$All
     )
     
     try { 
@@ -71,6 +83,9 @@ function Get-MITFolder {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {                
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITFolder} -BoundParameters $PSBoundParameters
             }
         }
     }

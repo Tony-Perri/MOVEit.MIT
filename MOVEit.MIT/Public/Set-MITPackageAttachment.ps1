@@ -4,7 +4,7 @@ function Set-MITPackageAttachment {
         Set (upload) an attachment for a MOVEit Transfer package
     .LINK
         Upload attachment
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/packages/attachments-1.0         
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/packages/attachments-1.0         
     #>
     [CmdletBinding()]
     param (

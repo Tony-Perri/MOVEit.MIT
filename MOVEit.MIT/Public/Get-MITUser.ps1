@@ -4,13 +4,13 @@ function Get-MITUser {
         Get MOVEit Transfer User(s)
     .LINK
         Get list of users
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&Permission={Permission}&Status={Status}&Username={Username}&FullName={FullName}&Email={Email}&IsExactMatch={IsExactMatch}&OrgId={OrgId}-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&Permission={Permission}&Status={Status}&Username={Username}&FullName={FullName}&Email={Email}&IsExactMatch={IsExactMatch}&OrgId={OrgId}-1.0
     .LINK
         Get current user details
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users/self-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users/self-1.0
     .LINK
         Get user details
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users/{Id}-1.0                
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users/{Id}-1.0                
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (
@@ -30,32 +30,46 @@ function Get-MITUser {
         #List params
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]                    
         [string]$Username,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet("AllUsers","EndUsers","Administrators","FileAdmins","GroupAdmins","TemporaryUsers","SysAdmins" )]
         [string]$Permission,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet("AllUsers","ActiveUsers","InactiveUsers","NeverSignedOnUsers","TemplateUsers")]
         [string]$Status,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$FullName,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$Email,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]        
         [switch]$IsExactMatch,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]        
         [Int32]$OrgId,
 
         [Parameter(Mandatory=$false,
@@ -68,17 +82,25 @@ function Get-MITUser {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('username', 'realname', 'lastLoginStamp', 'email')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
                 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory=$true,
+                    ParameterSetName='ListAll')]        
+        [switch]$All
     )
 
     try {
@@ -112,6 +134,10 @@ function Get-MITUser {
                 }
                 Invoke-MITRequest -Resource "$resource" -Body $query |
                     Write-MITResponse -TypeName 'MITUserSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITUser} -BoundParameters $PSBoundParameters
+                # Invoke-MITGetAll -Scriptblock $MyInvocation.MyCommand.ScriptBlock -BoundParameters $MyInvocation.BoundParameters
             }
         }
     }

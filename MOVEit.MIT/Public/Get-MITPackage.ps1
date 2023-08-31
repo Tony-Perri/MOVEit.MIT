@@ -4,10 +4,10 @@ function Get-MITPackage {
         Get MOVEit Transfer package(s)
     .LINK
         Get all packages current user can view
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/packages-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/packages-1.0
     .LINK
         Get package info
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/packages/{Id}?Action={Action}&MailboxId={MailboxId}-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/packages/{Id}?Action={Action}&MailboxId={MailboxId}-1.0
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (
@@ -27,18 +27,26 @@ function Get-MITPackage {
                     ParameterSetName='Detail')]
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]                    
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]                    
         [string]$MailboxId,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [switch]$NewOnly,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$SentTo,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$ReceivedFrom,
 
         [Parameter(Mandatory=$false,
@@ -51,17 +59,24 @@ function Get-MITPackage {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('sourceStamp')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory, ParameterSetName='ListAll')]
+        [switch]$All
     )
 
     try { 
@@ -93,6 +108,9 @@ function Get-MITPackage {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITPackageSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITPackage} -BoundParameters $PSBoundParameters
             }
         }
     }
