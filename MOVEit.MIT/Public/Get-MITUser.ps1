@@ -4,13 +4,13 @@ function Get-MITUser {
         Get MOVEit Transfer User(s)
     .LINK
         Get list of users
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&Permission={Permission}&Status={Status}&Username={Username}&FullName={FullName}&Email={Email}&IsExactMatch={IsExactMatch}&OrgId={OrgId}-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&Permission={Permission}&Status={Status}&Username={Username}&FullName={FullName}&Email={Email}&IsExactMatch={IsExactMatch}&OrgId={OrgId}-1.0
     .LINK
         Get current user details
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users/self-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users/self-1.0
     .LINK
         Get user details
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/users/{Id}-1.0                
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/users/{Id}-1.0                
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

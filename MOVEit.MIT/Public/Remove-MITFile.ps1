@@ -4,7 +4,7 @@ function Remove-MITFile {
         Remove a MOVEit Transfer File
     .LINK
         Delete folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/DELETEapi/v1/files/{Id}-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/DELETEapi/v1/files/{Id}-1.0        
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param (

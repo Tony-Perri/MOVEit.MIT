@@ -4,7 +4,7 @@ function New-MITFolder {
         Create a MOVEit Transfer Folder
     .LINK
         Create new subfolder in folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/folders/{Id}/subfolders-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/folders/{Id}/subfolders-1.0        
     #>
     [CmdletBinding()]
     param (

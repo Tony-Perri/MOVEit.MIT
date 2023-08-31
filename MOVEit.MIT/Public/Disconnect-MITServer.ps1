@@ -4,7 +4,7 @@ function Disconnect-MITServer {
         Disconnect from a MOVEit Transfer server
     .LINK
         Revokes API token
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/Auth_RevokeToken        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/Auth_RevokeToken        
     #>
     [CmdletBinding()]
     param (

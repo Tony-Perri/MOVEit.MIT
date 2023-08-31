@@ -4,10 +4,10 @@ function Set-MITFolderAcl {
         Change a MOVEit Transfer Folder Acl
     .LINK
         Change the Access Controls for a given folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PUTapi/v1/folders/{Id}/acls-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/PUTapi/v1/folders/{Id}/acls-1.0
     .LINK
         Change the single user Access Controls for a given folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/acls/{entryId}-1.0                
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/acls/{entryId}-1.0                
     #>
     [CmdletBinding()]
     param (

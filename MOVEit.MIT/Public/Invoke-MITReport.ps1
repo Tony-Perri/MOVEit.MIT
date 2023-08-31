@@ -3,7 +3,7 @@ function Invoke-MITReport {
     .SYNOPSIS
         Invoke (run) a MOVEit Transfer Report
     .LINK
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/reports/{Id}/results/download?Format={Format}-1.0                
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/reports/{Id}/results/download?Format={Format}-1.0                
     #>
     [CmdletBinding()]
     param (

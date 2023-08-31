@@ -39,10 +39,10 @@ function Get-MITLog {
         Paging info as custom MITPaging object
     .LINK
         Get list of logs current user can view
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/index.html#operation/GETapi/v1/logs?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&StartDateTime={StartDateTime}&EndDateTime={EndDateTime}&Action={Action}&UserNameContains={UserNameContains}&UserId={UserId}&FileIdContains={FileIdContains}&FileNameContains={FileNameContains}&SizeComparison={SizeComparison}&Size={Size}&FolderId={FolderId}&FolderPathContains={FolderPathContains}&IpContains={IpContains}&AgentBrandContains={AgentBrandContains}&SuccessFailure={SuccessFailure}&SuppressSigns={SuppressSigns}&SuppressEmailNotes={SuppressEmailNotes}&SuppressLogViews={SuppressLogViews}-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/index.html#operation/GETapi/v1/logs?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}&StartDateTime={StartDateTime}&EndDateTime={EndDateTime}&Action={Action}&UserNameContains={UserNameContains}&UserId={UserId}&FileIdContains={FileIdContains}&FileNameContains={FileNameContains}&SizeComparison={SizeComparison}&Size={Size}&FolderId={FolderId}&FolderPathContains={FolderPathContains}&IpContains={IpContains}&AgentBrandContains={AgentBrandContains}&SuccessFailure={SuccessFailure}&SuppressSigns={SuppressSigns}&SuppressEmailNotes={SuppressEmailNotes}&SuppressLogViews={SuppressLogViews}-1.0
     .LINK        
         Get log's info
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/index.html#operation/GETapi/v1/logs/{Id}-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/index.html#operation/GETapi/v1/logs/{Id}-1.0
     #>
     [CmdletBinding()]
     param (           

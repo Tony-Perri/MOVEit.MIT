@@ -4,7 +4,7 @@ function Get-MITMailbox {
         Get MOVEit Transfer mailbox(es)
     .LINK
         Retrieve mailboxes list
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/mailboxes-1.0
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/mailboxes-1.0
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

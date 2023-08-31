@@ -3,7 +3,7 @@ function Get-MITReport {
     .SYNOPSIS
         Get MOVEit Transfer Report List
     .LINK
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/GETapi/v1/reports?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}-1.0          
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/GETapi/v1/reports?Page={Page}&PerPage={PerPage}&SortField={SortField}&SortDirection={SortDirection}-1.0          
     #>
     [CmdletBinding(DefaultParameterSetName='List')]
     param (

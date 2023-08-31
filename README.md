@@ -1,5 +1,5 @@
 # MOVEit.MIT
-MOVEit.MIT is a PowerShell module for using the [MOVEit Transfer REST API](https://docs.ipswitch.com/MOVEit/Transfer2021/Api/rest/).  *Please note - This is currently a work-in-progress and not all endpoints have been implemented.*  
+MOVEit.MIT is a PowerShell module for using the [MOVEit Transfer REST API](https://docs.ipswitch.com/MOVEit/Transfer2023/Api/rest/).  *Please note - This is currently a work-in-progress and not all endpoints have been implemented.*  
 ## Features
 - PowerShell commands map, as much as possible, directly to REST API endpoints.
 - Commands set the type on output objects for formatting using .format.ps1xml file

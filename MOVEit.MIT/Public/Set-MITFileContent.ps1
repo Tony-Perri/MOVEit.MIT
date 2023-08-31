@@ -4,7 +4,7 @@ function Set-MITFileContent {
         Write (upload) a file to a MOVEit Transfer folder
     .LINK
         Upload file into folder
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/folders/{Id}/files?UploadType={UploadType}-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/folders/{Id}/files?UploadType={UploadType}-1.0        
     #>
     [CmdletBinding()]
     param (

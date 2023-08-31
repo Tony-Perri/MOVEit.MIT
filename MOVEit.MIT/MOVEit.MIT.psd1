@@ -34,7 +34,7 @@ Description = @'
 Powershell module for MOVEit Transfer REST API.
 
 For more information on the MOVEit Transfer REST API, please visit the following:
-https://docs.ipswitch.com/MOVEit/Transfer2021/Api/rest/
+https://docs.ipswitch.com/MOVEit/Transfer2023/Api/rest/
 '@
 
 # Minimum version of the PowerShell engine required by this module
@@ -163,7 +163,7 @@ PrivateData = @{
         ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
-        Prerelease = 'alpha'
+        # Prerelease = 'alpha'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

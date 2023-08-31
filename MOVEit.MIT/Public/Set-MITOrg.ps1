@@ -4,7 +4,7 @@ function Set-MITOrg {
         Update a MOVEit Transfer Org
     .LINK
         Create new organization
-        https://docs.ipswitch.com/MOVEit/Transfer2021_1/Api/Rest/#operation/PATCHapi/v1/organizations/{orgId}-1.0     
+        https://docs.ipswitch.com/MOVEit/Transfer2023//Api/Rest/#operation/PATCHapi/v1/organizations/{orgId}-1.0     
     #>
     [CmdletBinding()]
     param (

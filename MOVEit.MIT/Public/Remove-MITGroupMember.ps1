@@ -4,7 +4,7 @@ function Remove-MITGroupMember {
         Remove MOVEit Transfer Group Member
     .LINK
         Remove member from group
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/DELETEapi/v1/groups/{Id}/members/{UserId}-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/DELETEapi/v1/groups/{Id}/members/{UserId}-1.0        
     #>
     [CmdletBinding()]
     param (

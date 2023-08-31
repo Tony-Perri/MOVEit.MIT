@@ -4,7 +4,7 @@ function New-MITRemoteAccessRule {
         Create a MOVEit Transfer remote access rule
     .LINK
         Create new default rule for remote access
-        https://docs.ipswitch.com/MOVEit/Transfer2021/Api/Rest/#operation/POSTapi/v1/settings/security/remoteaccess/rules-1.0        
+        https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/POSTapi/v1/settings/security/remoteaccess/rules-1.0        
     #>
     [CmdletBinding()]
     param (
