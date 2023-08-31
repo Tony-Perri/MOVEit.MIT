@@ -30,7 +30,7 @@ function Write-MITResponse {
             # No paging info is being output, so write a warning if the total
             # items exceeds the number displayed per page
             if ($response.paging.totalItems -gt $response.paging.perPage) {
-                Write-Warning "Results are paged.  Use -IncludePaging, -Page and -PerPage parameters."
+                Write-Warning "Results are paged.  Use -IncludePaging, -Page and -PerPage parameters, or use the -All parameter."
             }
         }
     }

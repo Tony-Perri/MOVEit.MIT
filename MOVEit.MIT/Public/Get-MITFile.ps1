@@ -20,6 +20,8 @@ function Get-MITFile {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [switch]$NewOnly,
 
         [Parameter(Mandatory=$false,
@@ -32,17 +34,25 @@ function Get-MITFile {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('name', 'size', 'datetime', 'uploadstamp', 'path')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory=$true,
+                    ParameterSetName='ListAll')]        
+        [switch]$All
     )
     try {
         # Set the resource for this request
@@ -66,6 +76,9 @@ function Get-MITFile {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITFileSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {                
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITFile} -BoundParameters $PSBoundParameters
             }
         }
     }

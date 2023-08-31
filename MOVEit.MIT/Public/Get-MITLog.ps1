@@ -56,77 +56,94 @@ function Get-MITLog {
 
         # startDateTime for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [datetime]$StartDateTime,
         
         # endDateTime for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [datetime]$EndDateTime,
 
         # action for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [ValidateSet('None','FileTransfer','Administration','Upload',
                     'Download','UserMaintenance','ContentScanning')]
         [string]$Action,
 
         # userNameContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$UserNameContains,
 
         # userId for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$UserId,
 
         # fileIdContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$FileIdContains,
 
         # fileNameContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$FileNameContains,
 
         # sizeComparison for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [ValidateSet('None','LargerOrEqual','SmallerOrEqual')]
         [string]$SizeComparison,
 
         # size for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$Size,
 
         # folderId for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$FolderId,
 
         # folderPathContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$FolderPathContains,
         
         # ipContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$IpContains,
 
         # agentBrandContains for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [string]$AgentBrandContains,
 
         # successFailure for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [ValidateSet('None', 'Success', 'Error')]
         [string]$SuccessFailure,
 
         # suppressSigns for REST call
         # Note this switch sets suppressSigns to False
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [switch]$IncludeSigns,
 
         # suppressEmailNotes for REST call
         # Note this switch sets suppressEmailNotes to False
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [switch]$IncludeEmailNotes,
 
         # suppressLogViews for REST call
         # Note this switch sets suppressLogViews to False
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [switch]$IncludeLogViews,        
         
         # page for REST call
@@ -139,6 +156,7 @@ function Get-MITLog {
 
         # sortField for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [ValidateSet('id', 'logtime', 'action', 'username', 'userrealname', 'targetname', 
                     'filename', 'fileid', 'folderpath', 'xfersize', 'duration', 
                     'rate', 'ipaddress', 'agentbrand', 'resilnode')]
@@ -146,12 +164,16 @@ function Get-MITLog {
         
         # sortDirection for REST call
         [Parameter(Mandatory=$false, ParameterSetName='List')]
+        [Parameter(Mandatory=$false, ParameterSetName='ListAll')]
         [ValidateSet('asc', 'desc')]
         [string]$SortDirection,
         
         # switch to not include PagingInfo in the output
         [Parameter(Mandatory=$false)]
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory, ParameterSetName='ListAll')]
+        [switch]$All        
     )
     
     try {
@@ -198,6 +220,9 @@ function Get-MITLog {
                 # Send the request and write out the response
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -TypeName 'MITLog' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITLog} -BoundParameters $PSBoundParameters
             }
         }
     }

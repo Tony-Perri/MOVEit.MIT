@@ -47,6 +47,7 @@ do {
     $logs
 } while ($page++ -lt $paging.TotalPages)
 ```
+As of v.0.4.5, most of the `Get-MIT*` cmdlets now support the `-All` parameter.  This automates looping through all pages and returning all the results.  A warning is displayed if the total items exceeds 5000.
 ## Pipeline
 Many commands accept parameters from the pipeline
 ```powershell

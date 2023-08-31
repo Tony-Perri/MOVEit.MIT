@@ -20,10 +20,14 @@ function Get-MITFolder {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$Name,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [string]$Path,
 
         [Parameter(Mandatory=$false,
@@ -36,17 +40,25 @@ function Get-MITFolder {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('name', 'type', 'path', 'lastContentChangeTime')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory=$true,
+                    ParameterSetName='ListAll')]        
+        [switch]$All
     )
     
     try { 
@@ -71,6 +83,9 @@ function Get-MITFolder {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITFolderSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {                
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITFolder} -BoundParameters $PSBoundParameters
             }
         }
     }

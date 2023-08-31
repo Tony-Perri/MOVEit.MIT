@@ -25,17 +25,24 @@ function Get-MITOrg {
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
         [ValidateSet('name', 'id')]
         [string]$SortField,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]                    
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
-        [switch]$IncludePaging
+        [switch]$IncludePaging,
+
+        [Parameter(Mandatory, ParameterSetName='ListAll')]
+        [switch]$All
     )
  
     try { 
@@ -58,6 +65,9 @@ function Get-MITOrg {
                 }
                 Invoke-MITRequest -Resource $resource -Body $query |
                     Write-MITResponse -Typename 'MITOrgSimple' -IncludePaging:$IncludePaging
+            }
+            'ListAll' {
+                Invoke-MITGetAll -Scriptblock ${function:Get-MITOrg} -BoundParameters $PSBoundParameters
             }
         }
     }
