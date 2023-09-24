@@ -40,6 +40,12 @@ function Confirm-MITToken {
                 Headers = @{Accept = "application/json"}
                 UserAgent = $script:UserAgent
             }
+
+            # Add SkipCertificateCheck parameter if set
+            if ($script:SkipCertificateCheck) {
+                $params['SkipCertificateCheck'] = $true
+                Write-Verbose "SkipCertificateCheck: $true"
+            }
             
             $response = Invoke-RestMethod @params
             if ($response.access_token) {

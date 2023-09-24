@@ -37,6 +37,12 @@ function Disconnect-MITServer {
             UserAgent   =  $script:UserAgent
         }
 
+        # Add SkipCertificateCheck parameter if set
+        if ($script:SkipCertificateCheck) {
+            $irmParams['SkipCertificateCheck'] = $true
+            Write-Verbose "SkipCertificateCheck: $true"
+        }
+
         # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
         if ($response.message) {

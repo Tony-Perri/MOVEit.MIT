@@ -72,6 +72,12 @@ function Invoke-MITRequest {
         Write-Verbose "Accept: $($irmParams.Headers.Accept)"
         Write-Verbose "ContentType: $($irmParams.ContentType)"        
 
+        # Add SkipCertificateCheck parameter if set
+        if ($script:SkipCertificateCheck) {
+            $irmParams['SkipCertificateCheck'] = $true
+            Write-Verbose "SkipCertificateCheck: $true"
+        }
+
         # Send the request and write out the response
         Invoke-RestMethod @irmParams
     }
