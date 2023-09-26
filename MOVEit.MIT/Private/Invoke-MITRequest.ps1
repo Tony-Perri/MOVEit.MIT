@@ -81,6 +81,10 @@ function Invoke-MITRequest {
         # Send the request and write out the response
         Invoke-RestMethod @irmParams
     }
+    catch [System.Net.Http.HttpRequestException], [System.Net.WebException] {
+        # Format ErrorDetails which contains the JSON response from the REST API
+        $PSCmdlet.ThrowTerminatingError((Format-RestErrorDetails $PSItem))
+    }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)
     }

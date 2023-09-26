@@ -1,5 +1,6 @@
 ## 0.4.6 - 
 * Add support for -SkipCertificateCheck
+* Format RestApi error details rather than the raw json (still want to add a try/catch before release.)
 ## 0.4.5 - Sep 2023
 * `Set-MITFileContent`: Make HashType a parameter
 * `Set-MITFileContent`: Use chunked for files -ge 20MB (previously -ge 2GB)
