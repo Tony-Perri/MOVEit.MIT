@@ -26,11 +26,16 @@ function Confirm-MITToken {
         $elapsed = New-TimeSpan -Start $script:Token.CreatedAt
         Write-Verbose "MIT Token at $($elapsed.TotalSeconds.ToString('F0')) of $($script:Token.ExpiresIn) seconds"
 
+        # Check if the refresh token is already expired and, if so, exit with an error
+        if ($elapsed.TotalSeconds -ge $script:Token.ExpiresIn) {
+            Write-Error "MIT Token expired.  Call Connect-MITServer to reconnect." -ErrorAction Stop
+        }
+
         # If the key is half-way to expiring, let's go ahead and
         # refresh it.
         if ($elapsed.TotalSeconds -gt ($script:Token.ExpiresIn / 2)) {
 
-            Write-Verbose "MIT Token expired, refreshing..."
+            Write-Verbose "MIT Token over half expired, refreshing..."
 
             $params = @{
                 Uri = "$script:BaseUri/token"
