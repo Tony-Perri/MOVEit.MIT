@@ -1,3 +1,5 @@
+## 0.4.7 - 
+* 
 ## 0.4.6 - Oct 2023
 * Add support for -SkipCertificateCheck
 * Format RestApi error details rather than the raw json
