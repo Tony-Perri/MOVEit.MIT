@@ -9,6 +9,7 @@ function Set-MITFolderAcl {
         Change the single user Access Controls for a given folder
         https://docs.ipswitch.com/MOVEit/Transfer2023/Api/Rest/#operation/PATCHapi/v1/folders/{Id}/acls/{entryId}-1.0                
     #>
+    [OutputType('MITFolderAcl')]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory,
@@ -18,53 +19,86 @@ function Set-MITFolderAcl {
         [string]$FolderId,
 
         [Parameter(Mandatory,
-            ParameterSetName = 'ByType')]
+            ParameterSetName = 'ByTypeHashtable')]
+        [Parameter(Mandatory,                    
+            ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(Mandatory,                    
+            ParameterSetName = 'ByTypeStringArray')]
         [ValidateSet('None','User','Group','Email')]
         [string]$Type,
 
         [Parameter(Mandatory,
-            ParameterSetName = 'ByType')]
+            ParameterSetName = 'ByTypeHashtable')]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByTypeStringArray')]
         [string]$TypeId,
 
         [Parameter(Mandatory,
-            ParameterSetName = 'ByEntry')]
+            ParameterSetName = 'ByEntryHashtable')]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByEntrySwitches')]
+        [Parameter(Mandatory,
+            ParameterSetName = 'ByEntryStringArray')]
         [string]$EntryId,
         
         [Parameter()]
         [ValidateSet('AddToInherited', 'OverrideInherited')]
         [string]$OverrideBehaviourType,
 
-        # Permissions can either be provided as a hashtable or by
-        # using switches.  The hashtable will be used if specified
-        # and the switches will be ignored.
-        [Parameter()]
+        # The caller can pass-in a hashtable that will be passed straight
+        # to the REST API...
+        [Parameter(Mandatory, 
+                ParameterSetName = 'ByTypeHashtable')]
+        [Parameter(Mandatory,
+                ParameterSetName = 'ByEntryHashtable')]
         [hashtable]$Permissions,
 
-        [Parameter()]
+        # ...or, the caller can pass-in a StringArray
+        [Parameter(Mandatory,
+                ParameterSetName = 'ByTypeStringArray')]
+        [Parameter(Mandatory,
+                ParameterSetName = 'ByEntryStringArray')]
+        [ValidateSet('ReadFiles','WriteFiles','DeleteFiles','ListFiles',
+                     'Notify','AddDeleteSubfolders','Share','Admin','ListUsers')]
+        [string[]]$FolderPermissions,
+
+        # ...or, the caller can use switches to specify the permissions
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$ReadFiles,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$WriteFiles,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$DeleteFiles,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$ListFiles,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$Notify,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$AddDeleteSubfolders,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$Share,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$Admin,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByTypeSwitches')]
+        [Parameter(ParameterSetName = 'ByEntrySwitches')]
         [switch]$ListUsers 
     )
 
@@ -72,24 +106,39 @@ function Set-MITFolderAcl {
         # Set the resource for this request
         $resource = "folders/$FolderId/acls"
                     
-        # Build up the permissions hashtable from the switches if -Permissions was not used. 
-        # Use -Permissions to set share permissions.
-        if ( -not $PSBoundParameters.ContainsKey('Permissions')) {
-            $Permissions = [ordered]@{
-                readFiles           = "$ReadFiles"
-                writeFiles          = "$WriteFiles"
-                deleteFiles         = "$DeleteFiles"
-                listFiles           = "$ListFiles"
-                notify              = "$Notify"
-                addDeleteSubfolders = "$AddDeleteSubfolders"
-                share               = "$Share"
-                admin               = "$Admin"
-                listUsers           = "$ListUsers"
+        # Build up the permissions hashtable from the switch parameters or the [MITFolderAcl] parameters
+        switch -Wildcard ($PSCmdlet.ParameterSetName) {
+            '*Switches' {
+                $Permissions = [ordered]@{
+                    readFiles           = "$ReadFiles"
+                    writeFiles          = "$WriteFiles"
+                    deleteFiles         = "$DeleteFiles"
+                    listFiles           = "$ListFiles"
+                    notify              = "$Notify"
+                    addDeleteSubfolders = "$AddDeleteSubfolders"
+                    share               = "$Share"
+                    admin               = "$Admin"
+                    listUsers           = "$ListUsers"
+                }
+            }
+
+            '*StringArray' {
+                $Permissions = [ordered]@{
+                    readFiles           = "$($FolderPermissions -contains 'ReadFiles')"
+                    writeFiles          = "$($FolderPermissions -contains 'WriteFiles')"
+                    deleteFiles         = "$($FolderPermissions -contains 'DeleteFiles')"
+                    listFiles           = "$($FolderPermissions -contains 'ListFiles')"
+                    notify              = "$($FolderPermissions -contains 'Notify')"
+                    addDeleteSubfolders = "$($FolderPermissions -contains 'AddDeleteSubfolders')"
+                    share               = "$($FolderPermissions -contains 'Share')"
+                    admin               = "$($FolderPermissions -contains 'Admin')"
+                    listUsers           = "$($FolderPermissions -contains 'ListUsers')"
+                }
             }
         }
 
-        switch ($PSCmdlet.ParameterSetName) {
-            ByType {
+        switch -Wildcard ($PSCmdlet.ParameterSetName) {
+            'ByType*' {
                 $body = @{
                     type                = $Type
                     id                  = $TypeId
@@ -109,7 +158,7 @@ function Set-MITFolderAcl {
                 }
             }
 
-            ByEntry {
+            'ByEntry*' {
                 $body = @{
                     permissions = $Permissions
                 }
