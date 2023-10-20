@@ -1,6 +1,6 @@
-## 0.4.6 - 
+## 0.4.6 - Oct 2023
 * Add support for -SkipCertificateCheck
-* Format RestApi error details rather than the raw json (still want to add a try/catch before release.)
+* Format RestApi error details rather than the raw json
 * `Set-MITFolderAcl`: Add `-FolderPermissions` string[] parameter
 * `New-MITFolderAcl`: Add `-FolderPermissions` string[] parameter
 ## 0.4.5 - Sep 2023
