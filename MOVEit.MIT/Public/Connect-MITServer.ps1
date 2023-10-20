@@ -32,7 +32,11 @@ function Connect-MITServer {
         # OTP for MFA
         [Parameter()]
         [ValidatePattern('^\d{3}\s?\d{3}$')]
-        [string]$Otp
+        [string]$Otp,
+
+        # SkipCertificateCheck
+        [Parameter()]
+        [switch]$SkipCertificateCheck
     )     
 
     try {                    
@@ -41,6 +45,22 @@ function Connect-MITServer {
         $script:Token = @()
         $script:BaseUri = ''
 
+        # Determine if SkipCertificateCheck parameter is specified
+        $script:SkipCertificateCheck = $false
+        
+        if ($SkipCertificateCheck) {
+            if ($PSVersionTable.PSVersion.Major -ge 6) {
+                Write-Warning "SkipCertificateCheck is not secure and is not recommended. "
+                Write-Warning ("This switch is only intended to be used against known hosts " +
+                              "using a self-signed certificate for testing purposes.") 
+                Write-Warning "Use at your own risk."
+                $script:SkipCertificateCheck = $true                              
+            }
+            else {
+                Write-Error "SkipCertificateCheck requires PowerShell 6 or later" -ErrorAction Stop
+            }
+        }
+        
         # Set the Base Uri locally for now.  Will update the script-level variable if
         # the connection is successfu.
         $baseUri = "https://$Hostname/api/v1"
@@ -51,6 +71,11 @@ function Connect-MITServer {
             Method = 'POST'
             ContentType = 'application/x-www-form-urlencoded'        
             Headers = @{Accept = "application/json"}            
+        }
+        
+        # Add SkipCertificateCheck parameter if set
+        if ($script:SkipCertificateCheck) {
+            $params['SkipCertificateCheck'] = $true
         }
         
         # This try/catch block will be to catch and handle the exception that is thrown
@@ -99,7 +124,11 @@ function Connect-MITServer {
             }
             Write-Output "Connected to MOVEit Transfer server $Hostname"
         }
-    } 
+    }
+    catch [System.Net.Http.HttpRequestException], [System.Net.WebException] {
+        # Format ErrorDetails which contains the JSON response from the REST API
+        $PSCmdlet.ThrowTerminatingError((Format-RestErrorDetails $PSItem))
+    }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)
     }   

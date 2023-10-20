@@ -24,10 +24,20 @@ function New-MITFolderAcl {
         [Parameter()]
         [string]$NotificationMessage,
 
+        # The caller can pass-in a hashtable that will be passed straight
+        # to the REST API...
         [Parameter(Mandatory,
                     ParameterSetName='HashTable')]
         [hashtable]$Permissions,
 
+        # ...or, the caller can pass-in a StringArray
+        [Parameter(Mandatory,
+                ParameterSetName = 'StringArray')]
+        [ValidateSet('ReadFiles','WriteFiles','DeleteFiles','ListFiles',
+                     'Notify','AddDeleteSubfolders','Share','Admin','ListUsers')]
+        [string[]]$FolderPermissions,
+
+        # ...or, the caller can use switches to specify the permissions
         [Parameter(ParameterSetName='Switches')]
         [switch]$ReadFiles,
 
@@ -59,17 +69,33 @@ function New-MITFolderAcl {
 
     try {
         # Build up the permissions hashtable from the switches. Use -Permissions to set share permissions.
-        if ($PSCmdlet.ParameterSetName -eq 'Switches') {
-            $Permissions = [ordered]@{
-                readFiles           = "$ReadFiles"
-                writeFiles          = "$WriteFiles"
-                deleteFiles         = "$DeleteFiles"
-                listFiles           = "$ListFiles"
-                notify              = "$Notify"
-                addDeleteSubfolders = "$AddDeleteSubfolders"
-                share               = "$Share"
-                admin               = "$Admin"
-                listUsers           = "$ListUsers"
+        switch ($PSCmdlet.ParameterSetName) {
+            'Switches' {
+                $Permissions = [ordered]@{
+                    readFiles           = "$ReadFiles"
+                    writeFiles          = "$WriteFiles"
+                    deleteFiles         = "$DeleteFiles"
+                    listFiles           = "$ListFiles"
+                    notify              = "$Notify"
+                    addDeleteSubfolders = "$AddDeleteSubfolders"
+                    share               = "$Share"
+                    admin               = "$Admin"
+                    listUsers           = "$ListUsers"
+                }
+            }
+
+            'StringArray' {
+                $Permissions = [ordered]@{
+                    readFiles           = "$($FolderPermissions -contains 'ReadFiles')"
+                    writeFiles          = "$($FolderPermissions -contains 'WriteFiles')"
+                    deleteFiles         = "$($FolderPermissions -contains 'DeleteFiles')"
+                    listFiles           = "$($FolderPermissions -contains 'ListFiles')"
+                    notify              = "$($FolderPermissions -contains 'Notify')"
+                    addDeleteSubfolders = "$($FolderPermissions -contains 'AddDeleteSubfolders')"
+                    share               = "$($FolderPermissions -contains 'Share')"
+                    admin               = "$($FolderPermissions -contains 'Admin')"
+                    listUsers           = "$($FolderPermissions -contains 'ListUsers')"
+                }
             }
         }
         

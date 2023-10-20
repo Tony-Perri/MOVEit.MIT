@@ -37,12 +37,22 @@ function Disconnect-MITServer {
             UserAgent   =  $script:UserAgent
         }
 
+        # Add SkipCertificateCheck parameter if set
+        if ($script:SkipCertificateCheck) {
+            $irmParams['SkipCertificateCheck'] = $true
+            Write-Verbose "SkipCertificateCheck: $true"
+        }
+
         # Send the request and output the response
         $response = Invoke-RestMethod @irmParams
         if ($response.message) {
             $response.message
             "Disconnected from MOVEit Transfer server"
         }
+    }
+    catch [System.Net.Http.HttpRequestException], [System.Net.WebException] {
+        # Format ErrorDetails which contains the JSON response from the REST API
+        $PSCmdlet.ThrowTerminatingError((Format-RestErrorDetails $PSItem))
     }
     catch {
         $PSCmdlet.ThrowTerminatingError($PSItem)

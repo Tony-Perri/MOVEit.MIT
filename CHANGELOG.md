@@ -1,3 +1,8 @@
+## 0.4.6 - Oct 2023
+* Add support for -SkipCertificateCheck
+* Format RestApi error details rather than the raw json
+* `Set-MITFolderAcl`: Add `-FolderPermissions` string[] parameter
+* `New-MITFolderAcl`: Add `-FolderPermissions` string[] parameter
 ## 0.4.5 - Sep 2023
 * `Set-MITFileContent`: Make HashType a parameter
 * `Set-MITFileContent`: Use chunked for files -ge 20MB (previously -ge 2GB)
