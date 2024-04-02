@@ -48,8 +48,8 @@ function Set-MITPackageAttachment {
             Form = $form
         }
 
-        # If the file is over 2GB switch to chunked
-        if ($fileinfo.Length -gt [int32]::MaxValue) {
+        # If the file 20MB or larger switch to chunked
+        if ($fileinfo.Length -ge 20MB) {
             Write-Verbose 'Using Transfer-Encoding: chunked'
             $irmParams['TransferEncoding'] = 'chunked'
         }
