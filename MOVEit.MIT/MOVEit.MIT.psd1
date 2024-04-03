@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.4.6'
+ModuleVersion = '0.4.7'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -59,7 +59,7 @@ PowerShellVersion = '5.1'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+RequiredAssemblies = @('System.Net.Http')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -163,7 +163,7 @@ PrivateData = @{
         ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
-        # Prerelease = 'alpha'
+        # Prerelease = 'develop'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

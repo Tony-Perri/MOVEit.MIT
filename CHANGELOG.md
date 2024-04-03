@@ -1,3 +1,7 @@
+## 0.4.7 - Apr 2024
+* Small update to FormatRestApi error
+* Add 'System.Net.Http' assembly to manifest for better 5.1 compatibility.
+* `Set-MITPackageAttachment`: Use chunked for files -ge 20MB (previously -ge 2GB)
 ## 0.4.6 - Oct 2023
 * Add support for -SkipCertificateCheck
 * Format RestApi error details rather than the raw json
