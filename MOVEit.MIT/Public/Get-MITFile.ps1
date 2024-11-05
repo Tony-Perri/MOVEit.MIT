@@ -17,12 +17,36 @@ function Get-MITFile {
                     ParameterSetName='Detail')]
         [Alias('Id')]                    
         [string]$FileId,
+        
+        [Parameter(Mandatory,
+                    ValueFromPipelineByPropertyName=$true,
+                    ParameterSetName='ListDetailed')]
+        [string]$PathMask,
+        
+        [Parameter(Mandatory,
+                    ValueFromPipelineByPropertyName=$true,
+                    ParameterSetName='ListDetailed')]
+        [string]$FileMask,
+
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListDetailed')]
+        [switch]$Recursive,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
         [Parameter(Mandatory=$false,
                     ParameterSetName='ListAll')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListDetailed')]
         [switch]$NewOnly,
+
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='List')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListAll')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListDetailed')]                    
+        [datetime]$SinceDate,
 
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]
@@ -36,6 +60,8 @@ function Get-MITFile {
                     ParameterSetName='List')]
         [Parameter(Mandatory=$false,
                     ParameterSetName='ListAll')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListDetailed')]
         [ValidateSet('name', 'size', 'datetime', 'uploadstamp', 'path')]
         [string]$SortField,
 
@@ -43,13 +69,19 @@ function Get-MITFile {
                     ParameterSetName='List')]
         [Parameter(Mandatory=$false,
                     ParameterSetName='ListAll')]
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='ListDetailed')]
         [ValidateSet('ascending', 'descending')]
         [string]$SortDirection,
         
         [Parameter(Mandatory=$false,
                     ParameterSetName='List')]        
         [switch]$IncludePaging,
-
+        
+        [Parameter(Mandatory=$false,
+                    ParameterSetName='List')]        
+        [switch]$IncludeCurrentTimestamp,
+        
         [Parameter(Mandatory=$true,
                     ParameterSetName='ListAll')]        
         [switch]$All
@@ -69,16 +101,35 @@ function Get-MITFile {
                 $query = @{}
                 switch ($PSBoundParameters.Keys) {
                     NewOnly { $query['newOnly'] = $NewOnly}
+                    SinceDate { $query['sinceDate'] = $SinceDate.ToString('yyyy-MM-ddTHH:mm:ss') }
                     Page { $query['page'] = $Page }
                     PerPage { $query['perPage'] = $PerPage }
                     SortField { $query['sortField'] = $SortField }
                     SortDirection { $query['sortDirection'] = $SortDirection }
                 }
-                Invoke-MITRequest -Resource $resource -Body $query |
-                    Write-MITResponse -Typename 'MITFileSimple' -IncludePaging:$IncludePaging
+                $response = Invoke-MITRequest -Resource $resource -Body $query
+                if ($IncludeCurrentTimestamp) {
+                    $response | Select-Object -Property currentTimestamp |
+                        Write-MITResponse -Typename 'MITCurrentTimestamp'
+                }
+                $response | Write-MITResponse -Typename 'MITFileSimple' -IncludePaging:$IncludePaging
             }
             'ListAll' {                
                 Invoke-MITGetAll -Scriptblock ${function:Get-MITFile} -BoundParameters $PSBoundParameters
+            }
+            'ListDetailed' {
+                $query = @{}
+                switch ($PSBoundParameters.Keys) {
+                    PathMask { $query['pathMask'] = $PathMask }
+                    FileMask { $query['fileMask'] = $FileMask }
+                    Recursive { $query['recursive'] = $Recursive}
+                    NewOnly { $query['newOnly'] = $NewOnly}
+                    SinceDate { $query['sinceDate'] = $SinceDate.ToString('yyyy-MM-ddTHH:mm:ss') }
+                    SortField { $query['sortField'] = $SortField }
+                    SortDirection { $query['sortDirection'] = $SortDirection }
+                }
+                Invoke-MITRequest -Resource "$resource/detailed" -Body $query |
+                    Write-MITResponse -Typename 'MITFileSimple'
             }
         }
     }
