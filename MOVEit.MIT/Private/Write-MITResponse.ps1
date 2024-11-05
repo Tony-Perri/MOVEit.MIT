@@ -35,21 +35,17 @@ function Write-MITResponse {
         }
     }
 
-    # Add type to the items for better display from .format.ps1xml file and write
+    # Determine if the results are in the items property or the response itself
+    $result = if ($Response.psobject.properties['items']) { $Response.items } else { $Response }
+
+    # Add type to the results for better display from .format.ps1xml file and write
     # to the pipeline
-    if ($Response.psobject.properties['items']) {
-        if ($TypeName) {
-            # $Response.items | foreach-object { $_.PSOBject.TypeNames.Insert(0,$TypeName) }
-            foreach ($item in $Response.items) {
-                $item.PSOBject.TypeNames.Insert(0,$TypeName)
-            }
+    if ($TypeName) {
+        foreach ($item in $result) {
+            $item.PSOBject.TypeNames.Insert(0,$TypeName)
         }
-        $Response.items
     }
-    else {
-        if ($TypeName) {
-            $Response.PSOBject.TypeNames.Insert(0,$TypeName)
-        }
-        $Response
-    }   
+
+    # Write the results to the pipeline
+    $result
 }
