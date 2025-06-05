@@ -156,6 +156,43 @@
       </TableControl>
     </View>
     <View>
+      <Name>MITUserGroup</Name>
+      <ViewSelectedBy>
+        <TypeName>MITUserGroup</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+        <TableColumnHeader>
+            <Label>Relationship</Label>
+            <Width>17</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Width>24</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>relationship</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>description</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>MITFileSimple</Name>
       <ViewSelectedBy>
         <TypeName>MITFileSimple</TypeName>
@@ -620,6 +657,24 @@
             </CustomEntry>
           </CustomEntries>       
         </CustomControl>
+    </View>
+    <View>
+        <Name>MITCurrentTimestamp</Name>
+        <OutOfBand />        
+        <ViewSelectedBy>
+            <TypeName>MITCurrentTimestamp</TypeName>
+        </ViewSelectedBy>
+        <ListControl>     
+          <ListEntries>
+            <ListEntry> 
+              <ListItems>                             
+                <ListItem>
+                  <PropertyName>currentTimestamp</PropertyName>
+                </ListItem>               
+              </ListItems>
+            </ListEntry>
+          </ListEntries>       
+        </ListControl>
     </View>
     <View>
       <Name>MITOrgSimple</Name>

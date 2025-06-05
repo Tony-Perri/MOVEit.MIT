@@ -12,7 +12,7 @@
 RootModule = 'MOVEit.MIT.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.4.7'
+ModuleVersion = '0.4.8'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Core','Desktop')
@@ -79,6 +79,7 @@ FunctionsToExport = @(
     'Connect-MITServer'
     'Copy-MITFile'
     'Disconnect-MITServer'
+    'Get-MITCurrentTimestamp'
     'Get-MITFile'
     'Get-MITFileContent'
     'Get-MITFolder'
@@ -94,6 +95,7 @@ FunctionsToExport = @(
     'Get-MITReport'
     'Get-MITTransferStatus'
     'Get-MITUser'
+    'Get-MITUserGroup'
     'Invoke-MITRestMethod'
     'Invoke-MITReport'
     'Invoke-MITWebRequest'
@@ -163,7 +165,7 @@ PrivateData = @{
         ReleaseNotes = 'Please visit https://github.com/Tony-Perri/MOVEit.MIT/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
-        # Prerelease = 'develop'
+        Prerelease = 'develop'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false
